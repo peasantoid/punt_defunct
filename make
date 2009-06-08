@@ -1,5 +1,10 @@
 #!/bin/bash
+mkbuilddir() {
+  mkdir -p build/{,obj/{,punt,modules},modules}
+}
+
 make_build_punt() {
+  mkbuilddir
   echo 'Building interpreter...'
   for file in src/*.c; do
     file=$(basename $file .c)
@@ -10,6 +15,7 @@ make_build_punt() {
 }
 
 make_build_modules() {
+  mkbuilddir
   echo 'Building modules...'
   ls modules | while read mod; do
     echo "-- $mod"

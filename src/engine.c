@@ -15,6 +15,10 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * the actual punt runtime engine -- execute a token list
+ */
+
 #include "common.h"
 #include "engine.h"
 

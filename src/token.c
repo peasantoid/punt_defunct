@@ -20,6 +20,7 @@
  */
 
 #include "common.h"
+#include "token.h"
 #include <stdio.h>
 
 /* duplicate token list */

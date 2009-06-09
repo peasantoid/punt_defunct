@@ -15,6 +15,10 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * tokenize a string/file for execution by the engine
+ */
+
 #include "common.h"
 #include "tokenizer.h"
 #include <stdio.h>

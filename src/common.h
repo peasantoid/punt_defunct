@@ -15,6 +15,10 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * typedefs and misc. shiz
+ */
+
 #ifndef HAVE_COMMON_H
 #define HAVE_COMMON_H
 

@@ -15,6 +15,10 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * where everything gets glued together
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

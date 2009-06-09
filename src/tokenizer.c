@@ -23,6 +23,7 @@
 #include "tokenizer.h"
 #include "sequence.h"
 #include "pointer.h"
+#include "string.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -77,22 +78,13 @@ p_val *tokenize_str(char *str) {
               bsc = 0;
             }
           }
+          
+          /* remove leftover backslashes */
+          strv = str_replace(strv, "\\\\", "\\", 0);
+          strv = str_replace(strv, "\\'", "'", 0);
 
-          /*
-           * remove residual backslashes
-           * goddammit, C is the absolute f'ing worst language
-           * for string processing
-           */
-          strv2 = (char *)calloc(1, sizeof(char));
-          for(n = 0; n < strlen(strv); n++) {
-            if(strstr(strv + n, "\\\\") == strv + n ||
-              strstr(strv + n, "\\'") == strv + n) { n += 1; }
-            asprintf(&strv2, "%s%c", strv2, strv[n]);
-          }
-
-          seq_lappend(&tokens, "str", ptr_dupstr(strv2));
+          seq_lappend(&tokens, "str", ptr_dupstr(strv));
           free(strv);
-          free(strv2);
           break;
       default:
         /* it seems to be a number */

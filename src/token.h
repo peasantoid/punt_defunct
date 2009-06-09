@@ -15,26 +15,13 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HAVE_COMMON_H
-#define HAVE_COMMON_H
+#ifndef HAVE_TOKEN_H
+#define HAVE_TOKEN_H
 
-/* value */
-typedef struct {
-  char *type; /* test: if null, not init'd */
-  void *val;
-} p_val;
-typedef p_val p_tok; /* essentially the same thing; this is for clarity */
-/* 
- * note: value/token lists must be terminated by a "null" token; see above comment
- * next to < char *type; >
- */
+#include "common.h"
 
-/* variable */
-typedef struct {
-  char *id, *type;
-  void *val;
-} p_var;
-/* same thing with variable lists */
+int tok_llen(p_tok *);
+void tok_ldup(p_tok *, p_tok *);
 
 #endif
 

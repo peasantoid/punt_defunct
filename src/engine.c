@@ -18,7 +18,7 @@
 #include "common.h"
 #include "engine.h"
 
-void run_tokens(tok **tokens, var **vars) {
+void run_tokens(p_tok *tokens, p_var *vars) {
   
 }
 

@@ -26,9 +26,8 @@
 int main(int argc, char **argv) {
   int i;
   FILE *fp;
-  tok **tokens = (tok **)calloc(1, sizeof(tok *));
-    tokens[0] = NULL;
-  var **vars;
+  p_tok *tokens = (p_tok *)calloc(1, sizeof(p_tok));
+  p_var *vars = (p_var *)calloc(1, sizeof(p_var));
   
   for(i = 1; i < argc; i++) {
     fp = fopen(argv[i], "r");

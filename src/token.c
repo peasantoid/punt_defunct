@@ -15,26 +15,25 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HAVE_COMMON_H
-#define HAVE_COMMON_H
-
-/* value */
-typedef struct {
-  char *type; /* test: if null, not init'd */
-  void *val;
-} p_val;
-typedef p_val p_tok; /* essentially the same thing; this is for clarity */
-/* 
- * note: value/token lists must be terminated by a "null" token; see above comment
- * next to < char *type; >
+/*
+ * miscellaneous utilities for token manipulation
  */
 
-/* variable */
-typedef struct {
-  char *id, *type;
-  void *val;
-} p_var;
-/* same thing with variable lists */
+#include "common.h"
+#include <stdio.h>
 
-#endif
+/* duplicate token list */
+void tok_ldup(p_tok *src, p_tok *dest) {
+  int i;
+  for(i = 0; src[i].type != NULL; i++) {
+    dest[i] = src[i];
+  }
+}
+
+/* return length of token list */
+int tok_llen(p_tok *tokens) {
+  int i;
+  for(i = 0; tokens[i].type != NULL; i++);
+  return i;
+}
 

@@ -21,31 +21,32 @@
 #include <stdlib.h>
 #include <string.h>
 
-tok **tokenize_str(char *str) {
-  tok **tokens = (tok **)calloc(1, sizeof(tok *));
-    tokens[0] = NULL;
-  tok **_tokens; /* temporary storage for appending to <tokens> */
-  tok *token = (tok *)calloc(1, sizeof(tok));
+p_tok *tokenize_str(char *str) {
+  p_tok *tokens = (p_tok *)calloc(1, sizeof(p_tok));
+  p_tok *_tokens; /* temporary storage for appending to <tokens> */
+  p_tok token;
   int i;
   
+  printf("%d\n", tok_llen(tokens));
   for(i = 0; i < strlen(str); i++) {
-    printf("%c", str[i]);
-    token->type = "";
-    token->val = NULL;
+    token.type = "";
+    token.val = NULL;
   }
 
   return tokens;
 }
 
-tok **tokenize_fp(FILE *fp) {
-  tok **tokens;
-  char *code;
-  int c;
+p_tok *tokenize_fp(FILE *fp) {
+  p_tok *tokens;
+  char *code, *read;
+  int blocksize = 4096; /* hell, why not */
   
   code = "";
   while(1) {
-    c = fgetc(fp); if(c == EOF) { break; }
-    asprintf(&code, "%s%c", code, c);
+    read = (char *)calloc(blocksize + 1, sizeof(char)); /* +1 for NUL byte */
+    fgets(read, blocksize, fp); if(feof(fp)) { break; }
+    asprintf(&code, "%s%s", code, read);
+    free(read);
   }
   tokens = tokenize_str(code);
   free(code); /* don't want to leak that much memory */

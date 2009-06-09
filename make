@@ -9,7 +9,9 @@ make_build_punt() {
   for file in src/*.c; do
     file=$(basename $file .c)
     echo "-- $file"
-    gcc -c src/$file.c -o build/obj/punt/$file.o -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\"" || return 1
+    gcc -c src/$file.c -o build/obj/punt/$file.o \
+      -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\"" \
+      || return 1
   done
   gcc build/obj/punt/*.o -o build/punt
 }

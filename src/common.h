@@ -18,11 +18,12 @@
 #ifndef HAVE_COMMON_H
 #define HAVE_COMMON_H
 
-/* token */
+/* value */
 typedef struct {
   char *type;
   void *val;
-} tok;
+} val;
+typedef val tok; /* essentially the same thing */
 
 /* variable */
 typedef struct {

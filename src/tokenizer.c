@@ -44,8 +44,7 @@ tok **tokenize_fp(FILE *fp) {
   
   code = "";
   while(1) {
-    c = fgetc(fp);
-    if(c == EOF) { break; }
+    c = fgetc(fp); if(c == EOF) { break; }
     asprintf(&code, "%s%c", code, c);
   }
   tokens = tokenize_str(code);

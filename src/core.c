@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 #include "common.h"
 #include "tokenizer.h"
@@ -30,12 +32,12 @@
 int main(int argc, char **argv) {
   int i;
   FILE *fp;
-  p_tok *tokens = (p_tok *)calloc(1, sizeof(p_tok));
+  p_val *tokens = (p_val *)calloc(1, sizeof(p_val));
   p_var *vars = (p_var *)calloc(1, sizeof(p_var));
   
   for(i = 1; i < argc; i++) {
     fp = fopen(argv[i], "r");
-    if(!fp) {
+    if(!fp) { /* FIXME: doesn't fail if you try to run a directory (!) */
       perror(argv[i]);
       return 1;
     }

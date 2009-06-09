@@ -16,25 +16,30 @@
  */
 
 /*
- * miscellaneous utilities for token manipulation
+ * pointer creation/manipulation
  */
 
-#include "common.h"
-#include "token.h"
-#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-/* duplicate token list */
-void tok_ldup(p_tok *src, p_tok *dest) {
-  int i;
-  for(i = 0; src[i].type != NULL; i++) {
-    dest[i] = src[i];
-  }
+/* some functions for copying data */
+
+void *ptr_dupstr(char *str) {
+  char *dup = strdup(str);
+  return (void *)dup;
 }
 
-/* return length of token list */
-int tok_llen(p_tok *tokens) {
-  int i;
-  for(i = 0; tokens[i].type != NULL; i++);
-  return i;
+void *ptr_dupint(long num) {
+  /* TODO: find out why this is necessary */
+  long *dup = (long *)calloc(1, sizeof(long));
+  dup[0] = num;
+  return (void *)dup;
+}
+
+/* FIXME: figure out why long doubles don't work here */
+void *ptr_dupfloat(double num) {
+  double *dup = (double *)calloc(1, sizeof(double));
+  dup[0] = num;
+  return (void *)dup;
 }
 

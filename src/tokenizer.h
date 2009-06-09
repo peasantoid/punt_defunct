@@ -21,8 +21,8 @@
 #include "common.h"
 #include "stdio.h"
 
-p_tok *tokenize_str(char *);
-p_tok *tokenize_fp(FILE *);
+p_val *tokenize_str(char *);
+p_val *tokenize_fp(FILE *);
 
 #endif
 

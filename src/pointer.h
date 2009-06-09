@@ -15,13 +15,7 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HAVE_TOKEN_H
-#define HAVE_TOKEN_H
-
-#include "common.h"
-
-int tok_llen(p_tok *);
-void tok_ldup(p_tok *, p_tok *);
-
-#endif
+void *ptr_dupstr(char *);
+void *ptr_dupint(long);
+void *ptr_dupfloat(long double);
 

@@ -20,7 +20,7 @@
 
 #include "common.h"
 
-void run_tokens(p_tok *, p_var *);
+void run_tokens(p_val *, p_var *);
 
 #endif
 

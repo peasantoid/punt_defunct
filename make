@@ -8,7 +8,7 @@ make_build_punt() {
   echo 'Building interpreter...'
   for file in src/*.c; do
     file=$(basename $file .c)
-    echo "-- $file"
+    echo "  $file"
     gcc -c src/$file.c -o build/obj/punt/$file.o \
       -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\"" \
       || return 1
@@ -19,12 +19,12 @@ make_build_punt() {
 make_build_modules() {
   mkbuilddir
   echo 'Building modules...'
-  ls modules | while read mod; do
-    echo "-- $mod"
+  ls -1 modules | while read mod; do
+    echo "  $mod"
     mkdir -p "build/obj/modules/$mod"
     for file in "modules/$mod/"*.c; do
       file=$(basename "$file" .c)
-      echo "  -- $file"
+      echo "    $file"
       gcc -c "modules/$mod/$file.c" -o "build/obj/modules/$mod/$file.o"
     done
     gcc "build/obj/modules/$mod/"* -o "build/modules/$mod.so" --shared -fPIC

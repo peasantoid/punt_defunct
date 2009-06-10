@@ -43,11 +43,7 @@ int main(int argc, char **argv) {
     }
     tokens = tokenize_fp(fp);
     fclose(fp);
-<<<<<<< HEAD:src/core.c
     run_tokens(tokens, &vars);
-=======
-    run_tokens(tokens, vars);
->>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/core.c
   }
 
   return 0;

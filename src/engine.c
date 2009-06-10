@@ -37,6 +37,7 @@ void run_sexp(p_val *tokens, p_var **vars, int *offset) {
   p_val *args = NULL, *block = NULL; /* if not initialized, bad shiz happens */
   p_var var;
 
+  /* load our argument list with values */
   for(i = 0; i < seq_llen(tokens); i++) {
     if(!strcmp(tokens[i].type, "sexpr")) { break; }
 
@@ -71,9 +72,7 @@ void run_sexp(p_val *tokens, p_var **vars, int *offset) {
   }
   *offset += i;
 
-  for(i = 0; i < seq_llen(args); i++) {
-    printf("%s %d\n", args[i].type, args[i].val);
-  }
+  if(!seq_llen(args)) { return; }
 }
 
 /* run a list of s-expressions */

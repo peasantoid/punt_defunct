@@ -19,10 +19,7 @@
  * pointer creation/manipulation
  */
 
-<<<<<<< HEAD:src/pointer.c
 #include "common.h"
-=======
->>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/pointer.c
 #include <string.h>
 #include <stdlib.h>
 
@@ -40,18 +37,13 @@ void *ptr_dupint(long num) {
   return (void *)dup;
 }
 
-<<<<<<< HEAD:src/pointer.c
 /* FIXME: figure out why long doubles and/or strtold() don't work here */
-=======
-/* FIXME: figure out why long doubles don't work here */
->>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/pointer.c
 void *ptr_dupfloat(double num) {
   double *dup = (double *)calloc(1, sizeof(double));
   dup[0] = num;
   return (void *)dup;
 }
 
-<<<<<<< HEAD:src/pointer.c
 
 void *ptr_dupval(p_val val) {
   p_val *dup = (p_val *)calloc(1, sizeof(p_val));
@@ -59,5 +51,3 @@ void *ptr_dupval(p_val val) {
   return (void *)dup;
 }
 
-=======
->>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/pointer.c

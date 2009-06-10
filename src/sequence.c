@@ -24,6 +24,7 @@
 #include <stdio.h> /* why is NULL in here? sheesh */
 #include <stdlib.h>
 
+<<<<<<< HEAD:src/sequence.c
 /* return length of value list */
 int seq_llen(p_val *values) {
   int i;
@@ -36,16 +37,33 @@ int seq_llen(p_val *values) {
 void seq_ldup(p_val *src, p_val *dest) {
   int i;
   for(i = 0; i < seq_llen(src); i++) {
+=======
+/* duplicate value list */
+void seq_ldup(p_val *src, p_val *dest) {
+  int i;
+  for(i = 0; src[i].type != NULL; i++) {
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/sequence.c
     dest[i] = src[i];
   }
 }
 
+<<<<<<< HEAD:src/sequence.c
+=======
+/* return length of value list */
+int seq_llen(p_val *values) {
+  int i;
+  for(i = 0; values[i].type != NULL; i++);
+  return i;
+}
+
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/sequence.c
 /* add value to list */
 void seq_lappend(p_val **values, char *type, void *val) {
   p_val *_values; /* scratch space */
   int llen;
   
   if(*values) {
+<<<<<<< HEAD:src/sequence.c
     llen = seq_llen(*values);
     
     _values = (p_val *)calloc(llen, sizeof(p_val));
@@ -53,6 +71,15 @@ void seq_lappend(p_val **values, char *type, void *val) {
 
     *values = (p_val *)calloc(llen + 2, sizeof(p_val)); /* new value + null terminator */
     seq_ldup(_values, *values);
+=======
+    llen = tok_llen(*values);
+    
+    _values = (p_val *)calloc(llen, sizeof(p_val));
+    tok_ldup(*values, _values);
+
+    *values = (p_val *)calloc(llen + 2, sizeof(p_val)); /* new value + null terminator */
+    tok_ldup(_values, *values);
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/sequence.c
     free(_values);
 
     (*values)[llen].type = type;

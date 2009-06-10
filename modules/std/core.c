@@ -15,17 +15,5 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HAVE_ENGINE_H
-#define HAVE_ENGINE_H
-
-#include "common.h"
-
-<<<<<<< HEAD:src/engine.h
-void run_sexp(p_val *, p_var **, int *);
-void run_tokens(p_val *, p_var **);
-=======
-void run_tokens(p_val *, p_var *);
->>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/engine.h
-
-#endif
+#include "../../src/common.h"
 

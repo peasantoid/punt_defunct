@@ -15,10 +15,16 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+<<<<<<< HEAD:src/pointer.h
 #include "common.h"
 
 void *ptr_dupstr(char *);
 void *ptr_dupint(long);
 void *ptr_dupfloat(long double);
 void *ptr_dupval(p_val);
+=======
+void *ptr_dupstr(char *);
+void *ptr_dupint(long);
+void *ptr_dupfloat(long double);
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/pointer.h
 

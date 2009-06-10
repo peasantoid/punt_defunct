@@ -21,6 +21,7 @@
 
 #include "common.h"
 #include "engine.h"
+<<<<<<< HEAD:src/engine.c
 #include "variable.h"
 #include <stdio.h>
 #include <string.h>
@@ -84,5 +85,10 @@ void run_tokens(p_val *tokens, p_var **vars) {
       run_sexp(tokens + i + 1, vars, &i);
     }
   }
+=======
+
+void run_tokens(p_val *tokens, p_var *vars) {
+  
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/engine.c
 }
 

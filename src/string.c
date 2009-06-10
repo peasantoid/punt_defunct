@@ -34,7 +34,10 @@ int str_pos(char *target, char *search, int start) {
 
 /* 
  * replace substring
+<<<<<<< HEAD:src/string.c
  *
+=======
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/string.c
  * This function is probably hideous. But you know what? C is f'ing bad
  * for this sort of thing anyway.
  */

@@ -121,6 +121,20 @@ p_val *tokenize_str(char *str) {
     }
   }
 
+<<<<<<< HEAD:src/tokenizer.c
+=======
+  for(i = 0; i < seq_llen(tokens); i++) {
+    puts(tokens[i].type);
+    if(!strcmp(tokens[i].type, "int")) {
+      printf("-- %ld\n", *(long *)tokens[i].val);
+    } else if(!strcmp(tokens[i].type, "float")) {
+      printf("-- %lf\n", *(double *)tokens[i].val);
+    } else if(!strcmp(tokens[i].type, "str")) {
+      printf("-- %s\n", (char *)tokens[i].val);
+    }
+  }
+
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/tokenizer.c
   return tokens;
 }
 

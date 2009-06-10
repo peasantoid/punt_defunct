@@ -1,6 +1,10 @@
 #!/bin/bash
 mkbuilddir() {
+<<<<<<< HEAD:make
   mkdir -p build/{,punt,modules,obj/{,punt,modules}}
+=======
+  mkdir -p build/{,obj/{,punt,modules},modules}
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:make
 }
 
 make_build_punt() {
@@ -13,7 +17,11 @@ make_build_punt() {
       -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\"" \
       || return 1
   done
+<<<<<<< HEAD:make
   gcc build/obj/punt/*.o -o build/punt/punt
+=======
+  gcc build/obj/punt/*.o -o build/punt
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:make
 }
 
 make_build_modules() {
@@ -38,7 +46,11 @@ make_clean() {
 }
 
 make_install() {
+<<<<<<< HEAD:make
   cp build/punt/punt "$DESTDIR/$PREFIX/$BIN_DIR" &&
+=======
+  cp build/punt "$DESTDIR/$PREFIX/$BIN_DIR" &&
+>>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:make
 
   mkdir -p "$DESTDIR/$PREFIX/$MODULE_DIR" &&
   cp build/modules/* "$DESTDIR/$PREFIX/$MODULE_DIR"

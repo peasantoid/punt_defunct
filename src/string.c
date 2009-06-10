@@ -20,6 +20,19 @@
 #include "string.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
+
+/* like (a)sprintf, but return the result */
+char *vafmt(char *fmt, ...) {
+  va_list ap;
+  char *result;
+
+  va_start(ap, fmt);
+  vasprintf(&result, fmt, ap);
+  va_end(ap);
+
+  return result;
+}
 
 /* find position of substring */
 int str_pos(char *target, char *search, int start) {
@@ -34,10 +47,6 @@ int str_pos(char *target, char *search, int start) {
 
 /* 
  * replace substring
-<<<<<<< HEAD:src/string.c
- *
-=======
->>>>>>> 01a37f7f53df68814399a41113694686ae7cb53c:src/string.c
  * This function is probably hideous. But you know what? C is f'ing bad
  * for this sort of thing anyway.
  */

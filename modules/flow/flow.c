@@ -15,7 +15,24 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-char *vafmt(char *, ...);
-int str_find(char *, char *, int);
-char *str_replace(char *, char *, char *, int);
+#include "../../src/common.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+char **__list_funcs() {
+  char **funcs = (char **)calloc(2, sizeof(char *));
+
+  funcs[0] = "spuz";
+  funcs[1] = NULL;
+
+  return funcs;
+}
+
+p_val spuz(p_val *args, p_var **vars) {
+  puts("suck it");
+}
+
+/*p_val FUCK(p_val *args, p_var **vars) {
+  puts("fuck you");
+}*/
 

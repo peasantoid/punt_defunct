@@ -21,7 +21,7 @@
 
 #include "common.h"
 #include "sequence.h"
-#include <stdio.h> /* why is NULL in here? sheesh */
+#include <stdio.h> /* Why is NULL in here? Sheesh. */
 #include <stdlib.h>
 
 /* return length of value list */
@@ -48,7 +48,7 @@ void seq_lappend(p_val **values, char *type, void *val) {
   if(*values) {
     llen = seq_llen(*values);
     
-    _values = (p_val *)calloc(llen, sizeof(p_val));
+    _values = (p_val *)calloc(llen + 1, sizeof(p_val));
     seq_ldup(*values, _values);
 
     *values = (p_val *)calloc(llen + 2, sizeof(p_val)); /* new value + null terminator */
@@ -59,7 +59,7 @@ void seq_lappend(p_val **values, char *type, void *val) {
     (*values)[llen].val = val;
   } else {
     /* if it's empty, un-emptify it */
-    *values = (p_val *)calloc(1, sizeof(p_val));
+    *values = (p_val *)calloc(2, sizeof(p_val));
     (*values)[0].type = type;
     (*values)[0].val = val;
   }

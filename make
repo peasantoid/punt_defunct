@@ -13,7 +13,8 @@ make_build_punt() {
       -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\"" \
       || return 1
   done
-  gcc build/obj/punt/*.o -o build/punt/punt
+  gcc build/obj/punt/*.o -o build/punt/punt \
+    -l dl
 }
 
 make_build_modules() {
@@ -25,9 +26,9 @@ make_build_modules() {
     for file in "modules/$mod/"*.c; do
       file=$(basename "$file" .c)
       echo "    $file"
-      gcc -c "modules/$mod/$file.c" -o "build/obj/modules/$mod/$file.o"
+      gcc -c "modules/$mod/$file.c" -o "build/obj/modules/$mod/$file.o" -fPIC
     done
-    gcc "build/obj/modules/$mod/"* -o "build/modules/$mod.so" --shared -fPIC
+    gcc "build/obj/modules/$mod/"* -o "build/modules/$mod.so" --shared
   done
 }
 

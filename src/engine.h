@@ -20,7 +20,7 @@
 
 #include "common.h"
 
-void run_sexp(p_val *, p_var **, int *);
+p_val run_sexp(p_val *, p_var **, int *);
 void run_tokens(p_val *, p_var **);
 
 #endif

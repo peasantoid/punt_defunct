@@ -19,6 +19,7 @@
 #include "variable.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int var_llen(p_var *vars) {
   int i;
@@ -52,6 +53,38 @@ p_var var_lget(p_var *vars, char *id) {
 }
 
 void var_lset(p_var **vars, char *id, char *type, void *val) {
-  
+  p_var *_vars;
+  int llen, i;
+
+  if(var_llen(*vars) == 0) {
+    *vars = (p_var *)calloc(2, sizeof(p_var));
+    (*vars)[0].id = id;
+    (*vars)[0].type = type;
+    (*vars)[0].val = val;
+    return;
+  }
+
+  if(var_lexists(*vars, id)) {
+    for(i = 0; i < var_llen(*vars); i++) {
+      if(!strcmp((*vars)[i].id, id)) {
+        (*vars)[i].type = type;
+        (*vars)[i].val = val;
+        return;
+      }
+    }
+  } else {
+    llen = var_llen(*vars);
+    
+    _vars = (p_var *)calloc(llen + 1, sizeof(p_var));
+    var_ldup(*vars, _vars);
+
+    *vars = (p_var *)calloc(llen + 2, sizeof(p_var));
+    var_ldup(_vars, *vars);
+    free(_vars);
+
+    (*vars)[llen].id = id;
+    (*vars)[llen].type = type;
+    (*vars)[llen].val = val;
+  }
 }
 

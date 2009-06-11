@@ -26,7 +26,8 @@ make_build_modules() {
     for file in "modules/$mod/"*.c; do
       file=$(basename "$file" .c)
       echo "    $file"
-      gcc -c "modules/$mod/$file.c" -o "build/obj/modules/$mod/$file.o" -fPIC
+      gcc -c "modules/$mod/$file.c" -o "build/obj/modules/$mod/$file.o" -fPIC \
+        -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\""
     done
     gcc "build/obj/modules/$mod/"* -o "build/modules/$mod.so" --shared
   done

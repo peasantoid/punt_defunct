@@ -23,6 +23,7 @@
 #include "engine.h"
 #include "variable.h"
 #include "string.h"
+#include "pointer.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -48,8 +49,8 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     if(!strcmp(tokens[i].type, "sexpr")) { break; }
 
     else if(!strcmp(tokens[i].type, "sexpl")) {
-/*      i++;
-//      val_lappend(&args, */
+      rval = run_sexp(tokens + i + 1, vars, &i);
+      val_lappend(&args, rval.type, rval.val);
     }
 
     else if(!strcmp(tokens[i].type, "ident")) {
@@ -79,21 +80,24 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     }
 
     else if(!strcmp(tokens[i].type, "str")) {
-      val_lappend(&args, "str", ptr_dupstr(tokens[i].val));
+      val_lappend(&args, "str", tokens[i].val);
     }
 
     else if(!strcmp(tokens[i].type, "int")) {
-      val_lappend(&args, "int", ptr_dupint(*(int *)tokens[i].val));
+      val_lappend(&args, "int", tokens[i].val);
     }
 
     else if(!strcmp(tokens[i].type, "float")) {
-      val_lappend(&args, "float", ptr_dupfloat(*(double *)tokens[i].val));
+      val_lappend(&args, "float", tokens[i].val);
     }
   }
-  *offset += i;
+  if(offset) { *offset += i; }
 
-  /* empty expression, die silently */
-  if(!val_llen(args)) { return; }
+  rval.type = "int";
+  rval.val = ptr_dupint(0);
+
+  /* empty expression, exit silently */
+  if(!val_llen(args)) { return rval; }
 
   /* now execute stuff */
   func = *args;

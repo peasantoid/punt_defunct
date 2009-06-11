@@ -47,8 +47,8 @@ int str_pos(char *target, char *search, int start) {
 
 /* 
  * replace substring
- * This function is probably hideous. But you know what? C is f'ing bad
- * for this sort of thing anyway.
+ *
+ * This function is probably f'ing hideous.
  */
 char *str_replace(char *target, char *search, char *replace, int start) {
   char *result, *left, *right;

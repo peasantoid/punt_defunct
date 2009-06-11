@@ -16,38 +16,39 @@
  */
 
 /*
- * pointer creation/manipulation
+ * I/O functions
  */
 
-#include "common.h"
-#include <string.h>
+#include "../../src/common.h"
+#include "../../src/value.c"
+#include <stdio.h>
 #include <stdlib.h>
 
-/* some functions for copying data */
+char **_punt_list_funcs() {
+  char **funcs = (char **)calloc(2, sizeof(char *));
 
-void *ptr_dupstr(char *str) {
-  char *dup = strdup(str);
-  return (void *)dup;
+  funcs[0] = "print";
+  funcs[1] = NULL;
+
+  return funcs;
 }
 
-void *ptr_dupint(long num) {
-  /* TODO: find out why this is necessary */
-  long *dup = (long *)calloc(1, sizeof(long));
-  dup[0] = num;
-  return (void *)dup;
-}
+p_val punt_print(p_val *args, p_var **vars) {
+  p_val rval;
 
-/* FIXME: figure out why long doubles and/or strtold() don't work here (?) */
-void *ptr_dupfloat(double num) {
-  double *dup = (double *)calloc(1, sizeof(double));
-  dup[0] = num;
-  return (void *)dup;
-}
+  int i;
+  for(i = 0; i < val_llen(args); i++) {
+    if(!strcmp(args[i].type, "str")) {
+      printf("%s\n", (char *)args[i].val);
+    } else if(!strcmp(args[i].type, "int")) {
+      printf("%ld\n", *(int *)args[i].val);
+    } else if(!strcmp(args[i].type, "float")) {
+      printf("%lf\n", *(double *)args[i].val);
+    } else {
+      printf("<%s @ %p>\n", args[i].type, args[i].val);
+    }
+  }
 
-
-void *ptr_dupval(p_val val) {
-  p_val *dup = (p_val *)calloc(1, sizeof(p_val));
-  dup[0] = val;
-  return (void *)dup;
+  return rval;
 }
 

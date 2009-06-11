@@ -21,34 +21,24 @@
 
 #include "../../src/common.h"
 #include "../../src/value.c"
+#include "../../src/engine.c"
 #include <stdio.h>
 #include <stdlib.h>
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(2, sizeof(char *));
+  char **funcs = (char **)calloc(5, sizeof(char *));
 
-  funcs[0] = "print";
-  funcs[1] = NULL;
+  funcs[0] = "if";
+  funcs[1] = "elif";
+  funcs[2] = "else";
+  funcs[3] = "while";
+  funcs[4] = NULL;
 
   return funcs;
 }
 
-p_val punt_print(p_val *args, p_var **vars) {
+p_val punt_if(p_val *args, p_var **vars) {
   p_val rval;
-
-  int i;
-  for(i = 0; i < val_llen(args); i++) {
-    if(!strcmp(args[i].type, "str")) {
-      printf("%s\n", (char *)args[i].val);
-    } else if(!strcmp(args[i].type, "int")) {
-      printf("%ld\n", *(int *)args[i].val);
-    } else if(!strcmp(args[i].type, "float")) {
-      printf("%lf\n", *(double *)args[i].val);
-    } else {
-      printf("<%s @ %p>\n", args[i].type, args[i].val);
-    }
-  }
-
   return rval;
 }
 

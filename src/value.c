@@ -23,9 +23,18 @@
 #include "value.h"
 #include <stdio.h> /* Why is NULL in here? Sheesh. */
 #include <stdlib.h>
+#include <string.h>
+
+/* is it true? */
+int val_true(p_val val) {
+  if(!strcmp(val.type, "str") && strlen((char *)val.val) > 0) { return 1; }
+  else if(!strcmp(val.type, "int") && *(int *)val.val > 0) { return 1; }
+  else if(!strcmp(val.type, "float") && *(double *)val.val > 0) { return 1; }
+  else if(val.val) { return 1; }
+}
 
 /* return length of value list */
-int seq_llen(p_val *values) {
+int val_llen(p_val *values) {
   int i;
   if(!values) { return 0; }
   for(i = 0; values[i].type != NULL; i++);
@@ -33,26 +42,26 @@ int seq_llen(p_val *values) {
 }
 
 /* duplicate value list */
-void seq_ldup(p_val *src, p_val *dest) {
+void val_ldup(p_val *src, p_val *dest) {
   int i;
-  for(i = 0; i < seq_llen(src); i++) {
+  for(i = 0; i < val_llen(src); i++) {
     dest[i] = src[i];
   }
 }
 
 /* add value to list */
-void seq_lappend(p_val **values, char *type, void *val) {
+void val_lappend(p_val **values, char *type, void *val) {
   p_val *_values; /* scratch space */
   int llen;
   
   if(*values) {
-    llen = seq_llen(*values);
+    llen = val_llen(*values);
     
     _values = (p_val *)calloc(llen + 1, sizeof(p_val));
-    seq_ldup(*values, _values);
+    val_ldup(*values, _values);
 
     *values = (p_val *)calloc(llen + 2, sizeof(p_val)); /* new value + null terminator */
-    seq_ldup(_values, *values);
+    val_ldup(_values, *values);
     free(_values);
 
     (*values)[llen].type = type;

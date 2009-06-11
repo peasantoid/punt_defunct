@@ -37,7 +37,7 @@ p_val punt_print(p_val *args, p_var **vars) {
   p_val rval;
 
   int i;
-  for(i = 0; i < seq_llen(args); i++) {
+  for(i = 0; i < val_llen(args); i++) {
     if(!strcmp(args[i].type, "str")) {
       printf("%s\n", (char *)args[i].val);
     } else if(!strcmp(args[i].type, "int")) {

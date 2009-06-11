@@ -20,9 +20,10 @@
 
 #include "common.h"
 
-int seq_llen(p_val *);
-void seq_ldup(p_val *, p_val *);
-void seq_lappend(p_val **, char *, void *);
+int val_true(p_val);
+int val_llen(p_val *);
+void val_ldup(p_val *, p_val *);
+void val_lappend(p_val **, char *, void *);
 
 #endif
 

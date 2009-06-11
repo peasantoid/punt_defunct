@@ -48,16 +48,16 @@ p_val *tokenize_str(char *str) {
         for(; str[i] != '\n'; i++);
         break;
       case '(':
-        seq_lappend(&tokens, "sexpl", NULL);
+        val_lappend(&tokens, "sexpl", NULL);
         break;
       case ')':
-        seq_lappend(&tokens, "sexpr", NULL);
+        val_lappend(&tokens, "sexpr", NULL);
         break;
       case '[':
-        seq_lappend(&tokens, "blockl", NULL);
+        val_lappend(&tokens, "blockl", NULL);
         break;
       case ']':
-        seq_lappend(&tokens, "blockr", NULL);
+        val_lappend(&tokens, "blockr", NULL);
         break;
       case '\'':
           strv = (char *)calloc(1, sizeof(char));
@@ -83,7 +83,7 @@ p_val *tokenize_str(char *str) {
           strv = str_replace(strv, "\\\\", "\\", 0);
           strv = str_replace(strv, "\\'", "'", 0);
 
-          seq_lappend(&tokens, "str", ptr_dupstr(strv));
+          val_lappend(&tokens, "str", ptr_dupstr(strv));
           free(strv);
           break;
       default:
@@ -99,10 +99,10 @@ p_val *tokenize_str(char *str) {
 
           /* it's a float */
           if(strchr(strv, '.')) {
-            seq_lappend(&tokens, "float", ptr_dupfloat(strtod(strv, NULL)));
+            val_lappend(&tokens, "float", ptr_dupfloat(strtod(strv, NULL)));
           /* it's an int */
           } else {
-            seq_lappend(&tokens, "int", ptr_dupint(strtol(strv, NULL, 10)));
+            val_lappend(&tokens, "int", ptr_dupint(strtol(strv, NULL, 10)));
           }
           free(strv);
         } else if(isalnum(str[i]) || str[i] == '_') {
@@ -114,7 +114,7 @@ p_val *tokenize_str(char *str) {
           }
           i--;
 
-          seq_lappend(&tokens, "ident", ptr_dupstr(strv));
+          val_lappend(&tokens, "ident", ptr_dupstr(strv));
           free(strv);
         }
         break;

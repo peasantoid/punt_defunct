@@ -44,56 +44,56 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
   char **funcnames, *modpath;
 
   /* load our argument list with values */
-  for(i = 0; i < seq_llen(tokens); i++) {
+  for(i = 0; i < val_llen(tokens); i++) {
     if(!strcmp(tokens[i].type, "sexpr")) { break; }
 
     else if(!strcmp(tokens[i].type, "sexpl")) {
 /*      i++;
-//      seq_lappend(&args, */
+//      val_lappend(&args, */
     }
 
     else if(!strcmp(tokens[i].type, "ident")) {
       if(!strcmp(tokens[i].val, "use")) {
-        seq_lappend(&args, "builtin_use", NULL);
+        val_lappend(&args, "builtin_use", NULL);
       } else {
         if(!var_lexists(*vars, tokens[i].val)) {
           fprintf(stderr, "%s: undefined symbol\n", tokens[i].val);
           exit(1);
         }
         var = var_lget(*vars, tokens[i].val);
-        seq_lappend(&args, var.type, var.val);
+        val_lappend(&args, var.type, var.val);
       }
 
     } else if(!strcmp(tokens[i].type, "blockl")) {
       block = NULL;
       level = 1;
-      for(i++; i < seq_llen(tokens); i++) {
+      for(i++; i < val_llen(tokens); i++) {
         if(!strcmp(tokens[i].type, "blockl")) { level++; }
         else if(!strcmp(tokens[i].type, "blockr")) { level--; }
         if(level == 0) { break; }
 
-        seq_lappend(&block, tokens[i].type, tokens[i].val);
+        val_lappend(&block, tokens[i].type, tokens[i].val);
       }
-      seq_lappend(&args, "block", block);
+      val_lappend(&args, "block", block);
       /* FIXME: potential memory leak here unless something frees <block> later */
     }
 
     else if(!strcmp(tokens[i].type, "str")) {
-      seq_lappend(&args, "str", ptr_dupstr(tokens[i].val));
+      val_lappend(&args, "str", ptr_dupstr(tokens[i].val));
     }
 
     else if(!strcmp(tokens[i].type, "int")) {
-      seq_lappend(&args, "int", ptr_dupint(*(int *)tokens[i].val));
+      val_lappend(&args, "int", ptr_dupint(*(int *)tokens[i].val));
     }
 
     else if(!strcmp(tokens[i].type, "float")) {
-      seq_lappend(&args, "float", ptr_dupfloat(*(double *)tokens[i].val));
+      val_lappend(&args, "float", ptr_dupfloat(*(double *)tokens[i].val));
     }
   }
   *offset += i;
 
   /* empty expression, die silently */
-  if(!seq_llen(args)) { return; }
+  if(!val_llen(args)) { return; }
 
   /* now execute stuff */
   func = *args;
@@ -106,7 +106,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
   } else if(!strcmp(func.type, "func")) {
     
   } else if(!strcmp(func.type, "builtin_use")) {
-    for(i = 0; i < seq_llen(args); i++) {
+    for(i = 0; i < val_llen(args); i++) {
       if(strcmp(args[i].type, "str")) {
         fprintf(stderr, "use: all arguments must be strings\n");
         exit(1);
@@ -149,7 +149,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
 /* run a list of s-expressions */
 void run_tokens(p_val *tokens, p_var **vars) {
   int i;
-  for(i = 0; i < seq_llen(tokens); i++) {
+  for(i = 0; i < val_llen(tokens); i++) {
     if(!strcmp(tokens[i].type, "sexpl")) {
       run_sexp(tokens + i + 1, vars, &i);
     }

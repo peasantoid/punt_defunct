@@ -16,37 +16,34 @@
  */
 
 /*
- * where everything gets glued together
+ * type functions
  */
 
+#include "../../src/common.h"
+#include "../../src/pointer.c"
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/stat.h>
 
-#include "common.h"
-#include "tokenizer.h"
-#include "engine.h"
+char **_punt_list_funcs() {
+  char **funcs = (char **)calloc(2, sizeof(char *));
 
-int main(int argc, char **argv) {
-  int i;
-  FILE *fp;
-  p_val *tokens = (p_val *)calloc(1, sizeof(p_val));
-  p_var *vars = (p_var *)calloc(1, sizeof(p_var));
-  
-  for(i = 1; i < argc; i++) {
-    fp = fopen(argv[i], "r");
-    if(!fp) { /* FIXME: doesn't fail if you try to run a directory (!) */
-      perror(argv[i]);
-      return 1;
-    }
-    tokens = tokenize_fp(fp);
-    fclose(fp);
-    run_tokens(tokens, &vars);
-    free(tokens);
+  funcs[0] = "typeof";
+  funcs[1] = NULL;
+
+  return funcs;
+}
+
+p_val punt_typeof(p_val *args, p_var **vars) {
+  p_val rval;
+
+  if(seq_llen(args) != 1) {
+    fprintf(stderr, "typeof: only one argument");
+    exit(1);
   }
 
-  return 0;
+  rval.type = "str";
+  rval.val = (void *)args[0].type;
+
+  return rval;
 }
 

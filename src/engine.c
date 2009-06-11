@@ -37,7 +37,7 @@
  */
 p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
   int i, level;
-  p_val *args = NULL, *block = NULL, func; /* if not initialized, bad shiz happens */
+  p_val *args = NULL, *block = NULL, func, rval; /* if not initialized, bad shiz happens */
   p_var var;
   void *modptr = NULL, *(*funcnamesptr)();
   p_val (*funcptr)(p_val *, p_var **);
@@ -57,7 +57,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
         seq_lappend(&args, "builtin_use", NULL);
       } else {
         if(!var_lexists(*vars, tokens[i].val)) {
-          fprintf(stderr, "%s: no such variable\n", tokens[i].val);
+          fprintf(stderr, "%s: undefined symbol\n", tokens[i].val);
           exit(1);
         }
         var = var_lget(*vars, tokens[i].val);
@@ -75,7 +75,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
         seq_lappend(&block, tokens[i].type, tokens[i].val);
       }
       seq_lappend(&args, "block", block);
-      /* FIXME: potential for memory leak here unless something frees <block> later */
+      /* FIXME: potential memory leak here unless something frees <block> later */
     }
 
     else if(!strcmp(tokens[i].type, "str")) {
@@ -100,7 +100,12 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
   args++;
   
   /* only built-in function -- load a module */
-  if(!strcmp(func.type, "builtin_use")) {
+  if(!strcmp(func.type, "mfunc")) {
+    funcptr = func.val;
+    rval = (*funcptr)(args, vars);
+  } else if(!strcmp(func.type, "func")) {
+    
+  } else if(!strcmp(func.type, "builtin_use")) {
     for(i = 0; i < seq_llen(args); i++) {
       if(strcmp(args[i].type, "str")) {
         fprintf(stderr, "use: all arguments must be strings\n");
@@ -115,16 +120,16 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
         fprintf(stderr, "use: %s\n", dlerror());
         exit(1);
       }
-      funcnamesptr = dlsym(modptr, "__list_funcs");
+      funcnamesptr = dlsym(modptr, "_punt_list_funcs");
       if(!funcnamesptr) {
-        fprintf(stderr, "use: module \"%s\" does not define \"__list_funcs\"\n", modpath);
+        fprintf(stderr, "use: module \"%s\" does not define \"_punt_list_funcs\"\n", modpath);
         exit(1);
       }
       funcnames = (*funcnamesptr)();
       while(*funcnames) {
-        funcptr = dlsym(modptr, *funcnames);
+        funcptr = dlsym(modptr, vafmt("punt_%s", *funcnames));
         if(!funcptr) {
-          fprintf(stderr, "use: module \"%s\" reports function \"%s\" but does not define it\n", modpath, *funcnames);
+          fprintf(stderr, "use: module \"%s\" reports function \"%s\" but does not define it (should be defined as \"%s\")\n", modpath, *funcnames, vafmt("punt_%s", *funcnames));
           exit(1);
         }
         var_lset(vars, *funcnames, "mfunc", funcptr);
@@ -137,6 +142,8 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     fprintf(stderr, "type \"%s\" is not callable\n", func.type);
     exit(1);
   }
+
+  return rval;
 }
 
 /* run a list of s-expressions */

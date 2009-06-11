@@ -20,7 +20,7 @@
  */
 
 #include "common.h"
-#include "sequence.h"
+#include "value.h"
 #include <stdio.h> /* Why is NULL in here? Sheesh. */
 #include <stdlib.h>
 

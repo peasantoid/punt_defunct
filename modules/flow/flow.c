@@ -15,24 +15,40 @@
  * along with punt.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * flow control functions
+ */
+
 #include "../../src/common.h"
+#include "../../src/value.c"
 #include <stdio.h>
 #include <stdlib.h>
 
-char **__list_funcs() {
+char **_punt_list_funcs() {
   char **funcs = (char **)calloc(2, sizeof(char *));
 
-  funcs[0] = "spuz";
+  funcs[0] = "print";
   funcs[1] = NULL;
 
   return funcs;
 }
 
-p_val spuz(p_val *args, p_var **vars) {
-  puts("suck it");
-}
+p_val punt_print(p_val *args, p_var **vars) {
+  p_val rval;
 
-/*p_val FUCK(p_val *args, p_var **vars) {
-  puts("fuck you");
-}*/
+  int i;
+  for(i = 0; i < seq_llen(args); i++) {
+    if(!strcmp(args[i].type, "str")) {
+      printf("%s\n", (char *)args[i].val);
+    } else if(!strcmp(args[i].type, "int")) {
+      printf("%ld\n", *(int *)args[i].val);
+    } else if(!strcmp(args[i].type, "float")) {
+      printf("%lf\n", *(double *)args[i].val);
+    } else {
+      printf("<%s @ %p>\n", args[i].type, args[i].val);
+    }
+  }
+
+  return rval;
+}
 

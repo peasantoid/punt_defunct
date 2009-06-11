@@ -33,9 +33,7 @@ make_build_modules() {
 }
 
 make_clean() {
-  find build -type f | while read file; do
-    rm $file;
-  done
+  rm -r build/*
 }
 
 make_install() {

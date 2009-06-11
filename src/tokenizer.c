@@ -21,7 +21,7 @@
 
 #include "common.h"
 #include "tokenizer.h"
-#include "sequence.h"
+#include "value.h"
 #include "pointer.h"
 #include "string.h"
 #include <stdio.h>

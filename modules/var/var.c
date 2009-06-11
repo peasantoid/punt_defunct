@@ -44,6 +44,8 @@ p_val punt_bind(p_val *args, p_var **vars) {
     exit(1);
   }
 
+  var_lset(vars, (char *)args[0].val, args[1].type, args[1].val);
+
   return rval;
 }
 

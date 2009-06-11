@@ -53,11 +53,10 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
       val_lappend(&args, rval.type, rval.val);
 
     } else if(!strcmp(tokens[i].type, "literal")) {
-      literal = 1;
+      literal = i + 1;
 
     } else if(!strcmp(tokens[i].type, "symbol")) {
       if(literal) {
-        literal = 0;
         val_lappend(&args, "symbol", tokens[i].val);
       } else {
         if(!strcmp(tokens[i].val, "use")) {
@@ -97,6 +96,8 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     else if(!strcmp(tokens[i].type, "float")) {
       val_lappend(&args, "float", tokens[i].val);
     }
+
+    if(literal == i) { literal = 0; }
   }
   if(offset) { *offset += i; }
 
@@ -116,6 +117,23 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     rval = (*funcptr)(args, vars);
   } else if(!strcmp(func.type, "func")) {
     funcvars = NULL;
+
+    /* add some special variables */
+    for(i = 0; i < val_llen(args); i++) {
+      var_lset(&funcvars, vafmt("_%d", i + 1), args[i].type, args[i].val);
+    }
+    var_lset(&funcvars, "__argc", "int", ptr_dupint(val_llen(args)));
+
+    /* pass down any functions defined in current scope */
+    for(i = 0; i < var_llen(*vars); i++) {
+      if(!strcmp((*vars)[i].type, "mfunc") ||
+      !strcmp((*vars)[i].type, "func")) {
+        var_lset(&funcvars, (*vars)[i].id, (*vars)[i].type, (*vars)[i].val);
+      }
+    }
+
+    rval = run_tokens((p_val *)func.val, &funcvars);
+
     if(funcvars) { free(funcvars); }
   } else if(!strcmp(func.type, "builtin_use")) {
     for(i = 0; i < val_llen(args); i++) {
@@ -159,12 +177,16 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
 }
 
 /* run a list of s-expressions */
-void run_tokens(p_val *tokens, p_var **vars) {
+p_val run_tokens(p_val *tokens, p_var **vars) {
+  p_val rval;
   int i;
+
   for(i = 0; i < val_llen(tokens); i++) {
     if(!strcmp(tokens[i].type, "sexpl")) {
-      run_sexp(tokens + i + 1, vars, &i);
+      rval = run_sexp(tokens + i + 1, vars, &i);
     }
   }
+
+  return rval;
 }
 

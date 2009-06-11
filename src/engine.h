@@ -21,7 +21,7 @@
 #include "common.h"
 
 p_val run_sexp(p_val *, p_var **, int *);
-void run_tokens(p_val *, p_var **);
+p_val run_tokens(p_val *, p_var **);
 
 #endif
 

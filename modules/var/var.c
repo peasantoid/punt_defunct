@@ -16,44 +16,33 @@
  */
 
 /*
- * flow control functions
+ * variables
  */
 
 #include "../../src/common.h"
 #include "../../src/value.c"
-#include "../../src/engine.c"
+#include "../../src/variable.c"
 #include <stdio.h>
 #include <stdlib.h>
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(6 , sizeof(char *));
+  char **funcs = (char **)calloc(2, sizeof(char *));
 
-  funcs[0] = "if";
-/*  funcs[1] = "elif";
-  funcs[2] = "else";
-  funcs[3] = "while";*/
-  funcs[1] = "func";
+  funcs[0] = "bind";
 
   return funcs;
 }
 
-p_val punt_if(p_val *args, p_var **vars) {
-  p_val rval;
-  return rval;
-}
-
-p_val punt_func(p_val *args, p_var **vars) {
+p_val punt_bind(p_val *args, p_var **vars) {
   p_val rval;
 
-  if(val_llen(args) != 1) {
-    fprintf(stderr, "func: 1 argument required\n");
+  if(val_llen(args) != 2) {
+    fprintf(stderr, "bind: 2 arguments required\n");
     exit(1);
-  } else if(strcmp(args[0].type, "block")) {
-    fprintf(stderr, "func: must be of type \"block\"\n");
+  } else if(strcmp(args[0].type, "symbol")) {
+    fprintf(stderr, "bind: argument 1 must be symbol\n");
     exit(1);
   }
-  rval.type = "func";
-  rval.val = args[0].val;
 
   return rval;
 }

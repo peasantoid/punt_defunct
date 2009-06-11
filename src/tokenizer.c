@@ -59,6 +59,9 @@ p_val *tokenize_str(char *str) {
       case ']':
         val_lappend(&tokens, "blockr", NULL);
         break;
+      case '.':
+        val_lappend(&tokens, "literal", NULL);
+        break;
       case '\'':
           strv = (char *)calloc(1, sizeof(char));
           bsc = 0;
@@ -119,7 +122,7 @@ p_val *tokenize_str(char *str) {
           }
           i--;
 
-          val_lappend(&tokens, "ident", ptr_dupstr(strv));
+          val_lappend(&tokens, "symbol", ptr_dupstr(strv));
           free(strv);
         }
         break;

@@ -37,7 +37,7 @@
  * something we've already executed
  */
 p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
-  int i, level;
+  int i, level, literal;
   p_val *args = NULL, *block = NULL, func, rval; /* if not initialized, bad shiz happens */
   p_var var, *funcvars;
   void *modptr = NULL, *(*funcnamesptr)();
@@ -45,24 +45,31 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
   char **funcnames, *modpath;
 
   /* load our argument list with values */
-  for(i = 0; i < val_llen(tokens); i++) {
+  for(i = literal = 0; i < val_llen(tokens); i++) {
     if(!strcmp(tokens[i].type, "sexpr")) { break; }
 
     else if(!strcmp(tokens[i].type, "sexpl")) {
       rval = run_sexp(tokens + i + 1, vars, &i);
       val_lappend(&args, rval.type, rval.val);
-    }
 
-    else if(!strcmp(tokens[i].type, "ident")) {
-      if(!strcmp(tokens[i].val, "use")) {
-        val_lappend(&args, "builtin_use", NULL);
+    } else if(!strcmp(tokens[i].type, "literal")) {
+      literal = 1;
+
+    } else if(!strcmp(tokens[i].type, "symbol")) {
+      if(literal) {
+        literal = 0;
+        val_lappend(&args, "symbol", tokens[i].val);
       } else {
-        if(!var_lexists(*vars, tokens[i].val)) {
-          fprintf(stderr, "%s: undefined symbol\n", tokens[i].val);
-          exit(1);
+        if(!strcmp(tokens[i].val, "use")) {
+          val_lappend(&args, "builtin_use", NULL);
+        } else {
+          if(!var_lexists(*vars, tokens[i].val)) {
+            fprintf(stderr, "%s: undefined symbol\n", tokens[i].val);
+            exit(1);
+          }
+          var = var_lget(*vars, tokens[i].val);
+          val_lappend(&args, var.type, var.val);
         }
-        var = var_lget(*vars, tokens[i].val);
-        val_lappend(&args, var.type, var.val);
       }
 
     } else if(!strcmp(tokens[i].type, "blockl")) {

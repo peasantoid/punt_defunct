@@ -35,11 +35,9 @@ char **_punt_list_funcs() {
 p_val punt_typeof(p_val *args, p_var **vars) {
   p_val rval;
 
-  if(val_llen(args) == 0) {
+  if(val_llen(args) == 1) {
     fprintf(stderr, "typeof: 1 argument required\n");
     exit(1);
-  } else if(val_llen(args) != 1) {
-    fprintf(stderr, "typeof: only first argument will be used\n");
   }
 
   rval.type = "str";

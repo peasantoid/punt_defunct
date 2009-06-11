@@ -26,13 +26,13 @@
 #include <stdlib.h>
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(5, sizeof(char *));
+  char **funcs = (char **)calloc(6, sizeof(char *));
 
   funcs[0] = "if";
-  funcs[1] = "elif";
+/*  funcs[1] = "elif";
   funcs[2] = "else";
-  funcs[3] = "while";
-  funcs[4] = NULL;
+  funcs[3] = "while";*/
+  funcs[4] = "func";
 
   return funcs;
 }

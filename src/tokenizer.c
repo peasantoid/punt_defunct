@@ -74,7 +74,11 @@ p_val *tokenize_str(char *str) {
               asprintf(&strv, "%s\\", strv);
               bsc ++;
             } else {
-              asprintf(&strv, "%s%c", strv, str[i]);
+              if(str[i] == 'n' && bsc % 2 > 0) {
+                asprintf(&strv, "%s%c", strv, '\n');
+              } else {
+                asprintf(&strv, "%s%c", strv, str[i]);
+              }
               bsc = 0;
             }
           }
@@ -82,6 +86,7 @@ p_val *tokenize_str(char *str) {
           /* remove leftover backslashes */
           strv = str_replace(strv, "\\\\", "\\", 0);
           strv = str_replace(strv, "\\'", "'", 0);
+          strv = str_replace(strv, "\\\n", "\n", 0);
 
           val_lappend(&tokens, "str", ptr_dupstr(strv));
           free(strv);

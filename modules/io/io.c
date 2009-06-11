@@ -28,7 +28,6 @@ char **_punt_list_funcs() {
   char **funcs = (char **)calloc(2, sizeof(char *));
 
   funcs[0] = "print";
-  funcs[1] = NULL;
 
   return funcs;
 }
@@ -39,13 +38,13 @@ p_val punt_print(p_val *args, p_var **vars) {
   int i;
   for(i = 0; i < val_llen(args); i++) {
     if(!strcmp(args[i].type, "str")) {
-      printf("%s\n", (char *)args[i].val);
+      printf("%s", (char *)args[i].val);
     } else if(!strcmp(args[i].type, "int")) {
-      printf("%ld\n", *(int *)args[i].val);
+      printf("%ld", *(int *)args[i].val);
     } else if(!strcmp(args[i].type, "float")) {
-      printf("%lf\n", *(double *)args[i].val);
+      printf("%lf", *(double *)args[i].val);
     } else {
-      printf("<%s @ %p>\n", args[i].type, args[i].val);
+      printf("<%s @ %p>", args[i].type, args[i].val);
     }
   }
 

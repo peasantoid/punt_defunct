@@ -28,7 +28,6 @@ char **_punt_list_funcs() {
   char **funcs = (char **)calloc(2, sizeof(char *));
 
   funcs[0] = "typeof";
-  funcs[1] = NULL;
 
   return funcs;
 }

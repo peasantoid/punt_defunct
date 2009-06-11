@@ -39,7 +39,7 @@
 p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
   int i, level;
   p_val *args = NULL, *block = NULL, func, rval; /* if not initialized, bad shiz happens */
-  p_var var;
+  p_var var, *funcvars;
   void *modptr = NULL, *(*funcnamesptr)();
   p_val (*funcptr)(p_val *, p_var **);
   char **funcnames, *modpath;
@@ -108,7 +108,8 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     funcptr = func.val;
     rval = (*funcptr)(args, vars);
   } else if(!strcmp(func.type, "func")) {
-    
+    funcvars = NULL;
+    if(funcvars) { free(funcvars); }
   } else if(!strcmp(func.type, "builtin_use")) {
     for(i = 0; i < val_llen(args); i++) {
       if(strcmp(args[i].type, "str")) {

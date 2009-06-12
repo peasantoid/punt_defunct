@@ -62,7 +62,7 @@ case "$1" in
   clean)
     make_clean
     ;;
-  *)
+  all|*)
     make_build_punt &&
     make_build_modules
     ;;

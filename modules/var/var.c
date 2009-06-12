@@ -20,10 +20,11 @@
  */
 
 #include "../../src/common.h"
-#include "../../src/value.c"
-#include "../../src/variable.c"
+#include "../../src/value.h"
+#include "../../src/variable.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 char **_punt_list_funcs() {
   char **funcs = (char **)calloc(2, sizeof(char *));
@@ -34,7 +35,7 @@ char **_punt_list_funcs() {
 }
 
 p_val punt_bind(p_val *args, p_var **vars) {
-  p_val rval;
+  p_val rval = val_make();
 
   if(val_llen(args) != 2) {
     fprintf(stderr, "bind: 2 arguments required\n");

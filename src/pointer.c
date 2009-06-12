@@ -20,6 +20,7 @@
  */
 
 #include "common.h"
+#include "pointer.h"
 #include <string.h>
 #include <stdlib.h>
 

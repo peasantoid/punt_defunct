@@ -20,6 +20,7 @@
 
 #include "common.h"
 
+p_val val_make();
 int val_true(p_val);
 int val_llen(p_val *);
 void val_ldup(p_val *, p_val *);

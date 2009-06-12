@@ -21,9 +21,18 @@
 
 #include "common.h"
 #include "value.h"
+#include "pointer.h"
 #include <stdio.h> /* Why is NULL in here? Sheesh. */
 #include <stdlib.h>
 #include <string.h>
+
+/* generated initialized value */
+p_val val_make() {
+  p_val val;
+    val.type = "int";
+    val.val = ptr_dupint(0);
+  return val;
+}
 
 /* is it true? */
 int val_true(p_val val) {
@@ -31,6 +40,7 @@ int val_true(p_val val) {
   else if(!strcmp(val.type, "int") && *(int *)val.val > 0) { return 1; }
   else if(!strcmp(val.type, "float") && *(double *)val.val > 0) { return 1; }
   else if(val.val) { return 1; }
+  return 0;
 }
 
 /* return length of value list */

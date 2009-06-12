@@ -19,6 +19,6 @@
 
 void *ptr_dupstr(char *);
 void *ptr_dupint(long);
-void *ptr_dupfloat(long double);
+void *ptr_dupfloat(double);
 void *ptr_dupval(p_val);
 

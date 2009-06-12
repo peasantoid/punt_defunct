@@ -10,10 +10,12 @@ make_build_punt() {
     file=$(basename $file .c)
     echo "  $file"
     gcc -c src/$file.c -o build/obj/punt/$file.o \
+      -fPIC -Wall \
       -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\"" \
       || return 1
   done
   gcc build/obj/punt/*.o -o build/punt/punt \
+    -fPIC -Wall \
     -l dl
 }
 
@@ -26,10 +28,12 @@ make_build_modules() {
     for file in "modules/$mod/"*.c; do
       file=$(basename "$file" .c)
       echo "    $file"
-      gcc -c "modules/$mod/$file.c" -o "build/obj/modules/$mod/$file.o" -fPIC \
+      gcc -c "modules/$mod/$file.c" -o "build/obj/modules/$mod/$file.o" \
+        -fPIC -Wall \
         -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\""
     done
-    gcc "build/obj/modules/$mod/"* -o "build/modules/$mod.so" --shared
+    gcc "build/obj/modules/$mod/"* build/obj/punt/*.o -o "build/modules/$mod.so" \
+      --shared -fPIC
   done
 }
 

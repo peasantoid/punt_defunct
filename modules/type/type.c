@@ -20,7 +20,7 @@
  */
 
 #include "../../src/common.h"
-#include "../../src/value.c"
+#include "../../src/value.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,9 +33,9 @@ char **_punt_list_funcs() {
 }
 
 p_val punt_typeof(p_val *args, p_var **vars) {
-  p_val rval;
+  p_val rval = val_make();
 
-  if(val_llen(args) == 1) {
+  if(val_llen(args) != 1) {
     fprintf(stderr, "typeof: 1 argument required\n");
     exit(1);
   }

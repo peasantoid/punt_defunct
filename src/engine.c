@@ -24,6 +24,7 @@
 #include "variable.h"
 #include "string.h"
 #include "pointer.h"
+#include "value.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -63,7 +64,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
           val_lappend(&args, "builtin_use", NULL);
         } else {
           if(!var_lexists(*vars, tokens[i].val)) {
-            fprintf(stderr, "%s: undefined symbol\n", tokens[i].val);
+            fprintf(stderr, "%s: undefined symbol\n", (char *)tokens[i].val);
             exit(1);
           }
           var = var_lget(*vars, tokens[i].val);
@@ -99,7 +100,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
 
     if(literal == i) { literal = 0; }
   }
-  if(offset) { *offset += i; }
+  if(offset) { *offset += i + 1; }
 
   rval.type = "int";
   rval.val = ptr_dupint(0);
@@ -178,13 +179,16 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
 
 /* run a list of s-expressions */
 p_val run_tokens(p_val *tokens, p_var **vars) {
-  p_val rval;
+  p_val rval = val_make();
   int i;
 
   for(i = 0; i < val_llen(tokens); i++) {
     if(!strcmp(tokens[i].type, "sexpl")) {
       rval = run_sexp(tokens + i + 1, vars, &i);
     }
+
+    /* some return function was called */
+    if(var_lexists(*vars, "__return")) { break; }
   }
 
   return rval;

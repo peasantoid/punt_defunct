@@ -32,7 +32,7 @@
 int main(int argc, char **argv) {
   int i;
   FILE *fp;
-  p_val *tokens = (p_val *)calloc(1, sizeof(p_val));
+  p_val rval, *tokens = (p_val *)calloc(1, sizeof(p_val));
   p_var *vars = (p_var *)calloc(1, sizeof(p_var));
   
   for(i = 1; i < argc; i++) {
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     }
     tokens = tokenize_fp(fp);
     fclose(fp);
-    run_tokens(tokens, &vars);
+    rval = run_tokens(tokens, &vars);
     free(tokens);
   }
 

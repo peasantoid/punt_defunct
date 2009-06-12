@@ -19,6 +19,7 @@
  * tokenize a string/file for execution by the engine
  */
 
+#define _GNU_SOURCE
 #include "common.h"
 #include "tokenizer.h"
 #include "value.h"
@@ -39,8 +40,8 @@ int sfind(char *str, char c) {
 
 p_val *tokenize_str(char *str) {
   p_val *tokens = NULL;
-  int i, n, bsc, start;
-  char *strv, *strv2;
+  int i, bsc;
+  char *strv;
   
   for(i = 0; i < strlen(str); i++) {
     switch(str[i]) {

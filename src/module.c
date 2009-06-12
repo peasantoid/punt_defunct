@@ -36,11 +36,13 @@ void load_module(char *path, p_var **vars) {
     fprintf(stderr, "%s\n", dlerror());
     exit(1);
   }
+
   funcnamesptr = dlsym(modptr, "_punt_list_funcs");
   if(!funcnamesptr) {
     fprintf(stderr, "module \"%s\" does not define \"_punt_list_funcs\"\n", path);
     exit(1);
   }
+
   funcnames = (*funcnamesptr)();
   while(*funcnames) {
     funcptr = dlsym(modptr, vafmt("punt_%s", *funcnames));
@@ -64,8 +66,6 @@ void use_module(p_val *args, p_var **vars) {
       exit(1);
     }
 
-    /* load the module */
-    /* TODO: stick this in a separate source file */
     path = vafmt("%s/%s.so", MODULE_DIR, basename((char *)args[i].val));
     load_module(path, vars);
     free(path);

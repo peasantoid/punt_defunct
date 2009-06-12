@@ -62,6 +62,7 @@ double do_op(double op1, double op2, char op) {
   return result;
 }
 
+/* minlen: negative to use == instead of >= */
 void checktypes(p_val *args, int minlen, char *func) {
   int i;
 
@@ -159,6 +160,34 @@ p_val punt_pow(p_val *args, p_var **vars) {
 
 p_val punt_cos(p_val *args, p_var **vars) {
   p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "cos");
+  rval.val = ptr_dupfloat(cos(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_sin(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "sin");
+  rval.val = ptr_dupfloat(sin(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_tan(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "tan");
+  rval.val = ptr_dupfloat(tan(getval(args[0])));
+  intify(&rval);
+
   return rval;
 }
 

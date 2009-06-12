@@ -53,7 +53,7 @@ double do_op(double op1, double op2, char op) {
         fprintf(stderr, "mod: modulus by zero\n");
         return 0;
       }
-      result = (int)result % (int)op2;
+      result = (long)result % (long)op2;
       break;
     case '^':
       result = pow(result, op2);
@@ -114,7 +114,7 @@ p_val do_op_complete(p_val *args, char *func, char op) {
 }
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(8, sizeof(char *));
+  char **funcs = (char **)calloc(7, sizeof(char *));
 
   funcs[0] = "add";
   funcs[1] = "sub";
@@ -149,3 +149,4 @@ p_val punt_mod(p_val *args, p_var **vars) {
 p_val punt_pow(p_val *args, p_var **vars) {
   return do_op_complete(args, "pow", '^');
 }
+

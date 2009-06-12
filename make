@@ -33,7 +33,8 @@ make_build_modules() {
         -D "MODULE_DIR=\"$PREFIX/$MODULE_DIR\""
     done
     gcc "build/obj/modules/$mod/"* build/obj/punt/*.o -o "build/modules/$mod.so" \
-      --shared -fPIC
+      --shared -fPIC \
+      $(test -f "modules/$mod/GCC_OPTS" && cat "modules/$mod/GCC_OPTS")
   done
 }
 

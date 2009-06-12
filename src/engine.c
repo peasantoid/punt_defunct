@@ -112,10 +112,10 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
   func = *args;
   args++;
   
-  /* only built-in function -- load a module */
   if(!strcmp(func.type, "mfunc")) {
     funcptr = func.val;
     rval = (*funcptr)(args, vars);
+
   } else if(!strcmp(func.type, "func")) {
     funcvars = NULL;
 
@@ -136,6 +136,8 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     rval = run_tokens((p_val *)func.val, &funcvars);
 
     if(funcvars) { free(funcvars); }
+    
+  /* only built-in function -- load a module */
   } else if(!strcmp(func.type, "builtin_use")) {
     for(i = 0; i < val_llen(args); i++) {
       if(strcmp(args[i].type, "str")) {
@@ -169,6 +171,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
       free(modpath);
 //      dlclose(modptr); /* if <modptr> is closed, the function pointers are lost */
     }
+
   } else {
     fprintf(stderr, "type \"%s\" is not callable\n", func.type);
     exit(1);

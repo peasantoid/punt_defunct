@@ -22,7 +22,7 @@
 #include "common.h"
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(14, sizeof(char *));
+  char **funcs = (char **)calloc(16, sizeof(char *));
 
   funcs[0] = "add";
   funcs[1] = "sub";
@@ -37,6 +37,10 @@ char **_punt_list_funcs() {
   funcs[9] = "acos";
   funcs[10] = "asin";
   funcs[11] = "atan";
+
+  funcs[12] = "cosh";
+  funcs[13] = "sinh";
+  funcs[14] = "tanh";
 
   return funcs;
 }
@@ -126,6 +130,39 @@ p_val punt_atan(p_val *args, p_var **vars) {
 
   checktypes(args, -1, "atan");
   rval.val = ptr_dupfloat(atan(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_cosh(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "cosh");
+  rval.val = ptr_dupfloat(cosh(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_sinh(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "sinh");
+  rval.val = ptr_dupfloat(sinh(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_tanh(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "tanh");
+  rval.val = ptr_dupfloat(tanh(getval(args[0])));
   intify(&rval);
 
   return rval;

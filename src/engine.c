@@ -28,8 +28,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <dlfcn.h>
-#include <libgen.h>
 
 /*
  * run the contents of an s-expression

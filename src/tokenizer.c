@@ -97,7 +97,7 @@ p_val *tokenize_str(char *str) {
           break;
       default:
         /* it seems to be a number */
-        if(isdigit(str[i]) || strchr("-.", str[i])) {
+        if(isdigit(str[i]) || strchr("-", str[i])) {
           strv = (char *)calloc(2, sizeof(char));
           strv[0] = str[i];
 

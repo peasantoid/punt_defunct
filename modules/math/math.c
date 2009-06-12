@@ -49,10 +49,10 @@ double do_op(double op1, double op2, char op) {
       result /= op2;
       break;
     case '%':
-      /*if(op2 == 0) {
+      if(op2 == 0) {
         fprintf(stderr, "mod: modulus by zero\n");
         return 0;
-      }*/
+      }
       result = (int)result % (int)op2;
       break;
     case '^':

@@ -28,12 +28,15 @@
 #include "common.h"
 #include "tokenizer.h"
 #include "engine.h"
+#include "module.h"
+#include "variable.h"
 
 int main(int argc, char **argv) {
   int i;
   FILE *fp;
   p_val rval, *tokens = (p_val *)calloc(1, sizeof(p_val));
   p_var *vars = (p_var *)calloc(1, sizeof(p_var));
+    var_lset(&vars, "use", "mfunc", &use_module);
   
   for(i = 1; i < argc; i++) {
     fp = fopen(argv[i], "r");

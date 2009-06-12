@@ -18,7 +18,7 @@
 /*
  * math functions
  *
- * I'm sure there's a better way of doing this.
+ * I'm sure there's a better way of doing this...
  */
 
 #include "../../src/common.h"
@@ -62,11 +62,15 @@ double do_op(double op1, double op2, char op) {
   return result;
 }
 
-void checktypes(p_val *args, char *func) {
+void checktypes(p_val *args, int minlen, char *func) {
   int i;
 
-  if(!val_llen(args)) {
+  if(val_llen(args) < minlen) {
     fprintf(stderr, "%s: at least 1 argument required\n", func);
+    exit(1);
+  } else if(minlen < 0 && val_llen(args) != abs(minlen)) {
+    fprintf(stderr, "%s: %d %s required\n", func, abs(minlen),
+      abs(minlen) == 1 ? "argument" : "arguments");
     exit(1);
   }
 
@@ -97,14 +101,13 @@ void intify(p_val *arg) {
   }
 }
 
-p_val do_op_complete(p_val *args, char *func, char op) {
+p_val do_arithmetic(p_val *args, char *func, char op) {
   p_val rval = val_make();
   rval.type = "float";
-  checktypes(args, func);
+  checktypes(args, 1, func);
   rval.val = ptr_dupfloat(getval(args[0]));
   int i;
 
-  checktypes(args, func);
   for(i = 1; i < val_llen(args); i++) {
     *(double *)rval.val = do_op(getval(rval), getval(args[i]), op);
   }
@@ -114,7 +117,7 @@ p_val do_op_complete(p_val *args, char *func, char op) {
 }
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(7, sizeof(char *));
+  char **funcs = (char **)calloc(10, sizeof(char *));
 
   funcs[0] = "add";
   funcs[1] = "sub";
@@ -123,30 +126,39 @@ char **_punt_list_funcs() {
   funcs[4] = "mod";
   funcs[5] = "pow";
 
+  funcs[6] = "cos";
+  funcs[7] = "sin";
+  funcs[8] = "tan";
+
   return funcs;
 }
 
 p_val punt_add(p_val *args, p_var **vars) { 
-  return do_op_complete(args, "add", '+');
+  return do_arithmetic(args, "add", '+');
 }
 
 p_val punt_sub(p_val *args, p_var **vars) {
-  return do_op_complete(args, "sub", '-');
+  return do_arithmetic(args, "sub", '-');
 }
 
 p_val punt_mul(p_val *args, p_var **vars) {
-  return do_op_complete(args, "mul", '*');
+  return do_arithmetic(args, "mul", '*');
 }
 
 p_val punt_div(p_val *args, p_var **vars) {
-  return do_op_complete(args, "div", '/');
+  return do_arithmetic(args, "div", '/');
 }
 
 p_val punt_mod(p_val *args, p_var **vars) {
-  return do_op_complete(args, "mod", '%');
+  return do_arithmetic(args, "mod", '%');
 }
 
 p_val punt_pow(p_val *args, p_var **vars) {
-  return do_op_complete(args, "pow", '^');
+  return do_arithmetic(args, "pow", '^');
+}
+
+p_val punt_cos(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+  return rval;
 }
 

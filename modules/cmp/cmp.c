@@ -27,7 +27,7 @@
 #include <string.h>
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(7, sizeof(char *));
+  char **funcs = (char **)calloc(8, sizeof(char *));
 
   funcs[0] = "eq";
   funcs[1] = "neq";
@@ -35,6 +35,7 @@ char **_punt_list_funcs() {
   funcs[3] = "gt";
   funcs[4] = "le";
   funcs[5] = "ge";
+  funcs[6] = "cmpaddr";
 
   return funcs;
 }
@@ -107,6 +108,18 @@ p_val punt_ge(p_val *args, p_var **vars) {
     exit(1);
   }
   rval.val = ptr_dupint(val_cmp(args[0], args[1], "ge"));
+
+  return rval;
+}
+
+p_val punt_cmpaddr(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+
+  if(val_llen(args) != 2) {
+    fprintf(stderr, "cmpaddr: 2 arguments required\n");
+    exit(1);
+  }
+  rval.val = ptr_dupint((int)(args[0].val == args[1].val));
 
   return rval;
 }

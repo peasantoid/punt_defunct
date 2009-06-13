@@ -41,11 +41,6 @@ char **_punt_list_funcs() {
   return funcs;
 }
 
-p_val punt_if(p_val *args, p_var **vars) {
-  p_val rval = val_make();
-  return rval;
-}
-
 /*
  * return a value
  *
@@ -79,6 +74,11 @@ p_val punt_exit(p_val *args, p_var **vars) {
   }
   exit(*(int *)args[0].val);
 
+  return rval;
+}
+
+p_val punt_if(p_val *args, p_var **vars) {
+  p_val rval = val_make();
   return rval;
 }
 

@@ -78,7 +78,7 @@ p_val punt_cos(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "cos");
-  rval.val = ptr_dupfloat(cos(getval(args[0])));
+  rval.val = ptr_dupfloat(cos(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -89,7 +89,7 @@ p_val punt_sin(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "sin");
-  rval.val = ptr_dupfloat(sin(getval(args[0])));
+  rval.val = ptr_dupfloat(sin(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -100,7 +100,7 @@ p_val punt_tan(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "tan");
-  rval.val = ptr_dupfloat(tan(getval(args[0])));
+  rval.val = ptr_dupfloat(tan(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -111,7 +111,7 @@ p_val punt_acos(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "acos");
-  rval.val = ptr_dupfloat(acos(getval(args[0])));
+  rval.val = ptr_dupfloat(acos(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -122,7 +122,7 @@ p_val punt_asin(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "asin");
-  rval.val = ptr_dupfloat(asin(getval(args[0])));
+  rval.val = ptr_dupfloat(asin(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -133,7 +133,7 @@ p_val punt_atan(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "atan");
-  rval.val = ptr_dupfloat(atan(getval(args[0])));
+  rval.val = ptr_dupfloat(atan(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -144,7 +144,7 @@ p_val punt_cosh(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "cosh");
-  rval.val = ptr_dupfloat(cosh(getval(args[0])));
+  rval.val = ptr_dupfloat(cosh(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -155,7 +155,7 @@ p_val punt_sinh(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "sinh");
-  rval.val = ptr_dupfloat(sinh(getval(args[0])));
+  rval.val = ptr_dupfloat(sinh(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -166,7 +166,7 @@ p_val punt_tanh(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "tanh");
-  rval.val = ptr_dupfloat(tanh(getval(args[0])));
+  rval.val = ptr_dupfloat(tanh(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -177,7 +177,7 @@ p_val punt_ceil(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "ceil");
-  rval.val = ptr_dupfloat(ceil(getval(args[0])));
+  rval.val = ptr_dupfloat(ceil(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -188,7 +188,7 @@ p_val punt_floor(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "floor");
-  rval.val = ptr_dupfloat(floor(getval(args[0])));
+  rval.val = ptr_dupfloat(floor(val_getnum(args[0])));
   intify(&rval);
 
   return rval;
@@ -199,7 +199,7 @@ p_val punt_abs(p_val *args, p_var **vars) {
     rval.type = "float";
 
   checktypes(args, -1, "abs");
-  rval.val = ptr_dupfloat(fabs(getval(args[0])));
+  rval.val = ptr_dupfloat(fabs(val_getnum(args[0])));
   intify(&rval);
 
   return rval;

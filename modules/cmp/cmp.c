@@ -30,7 +30,7 @@ char **_punt_list_funcs() {
   char **funcs = (char **)calloc(7, sizeof(char *));
 
   funcs[0] = "eq";
-  funcs[1] = "neq";
+  funcs[1] = "ne";
   funcs[2] = "lt";
   funcs[3] = "gt";
   funcs[4] = "le";
@@ -51,14 +51,14 @@ p_val punt_eq(p_val *args, p_var **vars) {
   return rval;
 }
 
-p_val punt_neq(p_val *args, p_var **vars) {
+p_val punt_ne(p_val *args, p_var **vars) {
   p_val rval = val_make();
 
   if(val_llen(args) != 2) {
-    fprintf(stderr, "neq: 2 arguments required\n");
+    fprintf(stderr, "ne: 2 arguments required\n");
     exit(1);
   }
-  rval.val = ptr_dupint(val_cmp(args[0], args[1], "neq"));
+  rval.val = ptr_dupint(val_cmp(args[0], args[1], "ne"));
 
   return rval;
 }

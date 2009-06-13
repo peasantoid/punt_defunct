@@ -72,16 +72,6 @@ void checktypes(p_val *args, int minlen, char *func) {
   }
 }
 
-double getval(p_val arg) {
-  double result = 0;
-  if(!strcmp(arg.type, "int")) {
-    result = (double)*(long *)arg.val;
-  } else if(!strcmp(arg.type, "float")) {
-    result = *(double *)arg.val;
-  }
-  return result;
-}
-
 void intify(p_val *arg) {
   if((long)*(double *)(*(p_val *)arg).val ==
   *(double *)(*(p_val *)arg).val) {
@@ -94,11 +84,11 @@ p_val do_arithmetic(p_val *args, char *func, char op) {
   p_val rval = val_make();
   rval.type = "float";
   checktypes(args, 1, func);
-  rval.val = ptr_dupfloat(getval(args[0]));
+  rval.val = ptr_dupfloat(val_getnum(args[0]));
   int i;
 
   for(i = 1; i < val_llen(args); i++) {
-    *(double *)rval.val = do_op(getval(rval), getval(args[i]), op);
+    *(double *)rval.val = do_op(val_getnum(rval), val_getnum(args[i]), op);
   }
   intify(&rval);
 

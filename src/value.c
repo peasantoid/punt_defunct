@@ -61,7 +61,7 @@ int val_cmp(p_val v1, p_val v2, char *op) {
       (!strcmp(v2.type, "int") || !strcmp(v2.type, "float"))) {
     if(!strcmp(op, "eq")) {
       return (int)(val_getnum(v1) == val_getnum(v2));
-    } else if(!strcmp(op, "neq")) {
+    } else if(!strcmp(op, "ne")) {
       return (int)(val_getnum(v1) != val_getnum(v2));
     } else if(!strcmp(op, "lt")) {
       return (int)(val_getnum(v1) < val_getnum(v2));
@@ -77,7 +77,7 @@ int val_cmp(p_val v1, p_val v2, char *op) {
   } else if(!strcmp(v1.type, "str") && !strcmp(v2.type, "str")) {
     if(!strcmp(op, "eq")) {
       return (int)(!strcmp((char *)v1.val, (char *)v2.val));
-    } else if(!strcmp(op, "neq")) {
+    } else if(!strcmp(op, "ne")) {
       return (int)(0 == strcmp((char *)v1.val, (char *)v2.val));
     } else if(!strcmp(op, "lt")) {
       return (int)(strlen((char *)v1.val) < strlen((char *)v2.val));
@@ -93,7 +93,7 @@ int val_cmp(p_val v1, p_val v2, char *op) {
   } else {
     if(!strcmp(op, "eq")) {
       return (int)(v1.val == v2.val);
-    } else if(!strcmp(op, "neq")) {
+    } else if(!strcmp(op, "ne")) {
       return (int)(v1.val != v2.val);
     } else if(!strcmp(op, "lt")) {
       return (int)(v1.val < v2.val);

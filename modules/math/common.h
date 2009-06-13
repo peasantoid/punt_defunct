@@ -25,7 +25,6 @@
 
 double do_op(double op1, double op2, char op);
 void checktypes(p_val *args, int minlen, char *func);
-double getval(p_val arg);
 void intify(p_val *arg);
 p_val do_arithmetic(p_val *args, char *func, char op);
 

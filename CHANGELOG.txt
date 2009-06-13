@@ -3,4 +3,5 @@
     .__func to its contents. This lets anonymous functions recurse.
   * Added .if to 'flow' module.
   * Added .either to 'flow'.
+  * Added .not to io.
 

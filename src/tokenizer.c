@@ -79,7 +79,7 @@ p_val *tokenize_str(char *str) {
               bsc ++;
             } else {
               if(str[i] == 'n' && bsc % 2 > 0) {
-                asprintf(&strv, "%s%c", strv, '\n');
+                asprintf(&strv, "%s\n", strv);
               } else {
                 asprintf(&strv, "%s%c", strv, str[i]);
               }

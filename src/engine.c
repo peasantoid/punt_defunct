@@ -108,7 +108,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     funcptr = func.val;
     rval = (*funcptr)(args, vars);
 
-  } else if(!strcmp(func.type, "func")) {
+  } else if(!strcmp(func.type, "block")) {
     funcvars = NULL;
 
     /* add some special variables */
@@ -120,7 +120,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
     /* pass down any functions defined in current scope */
     for(i = 0; i < var_llen(*vars); i++) {
       if(!strcmp((*vars)[i].type, "mfunc") ||
-      !strcmp((*vars)[i].type, "func")) {
+      !strcmp((*vars)[i].type, "block")) {
         var_lset(&funcvars, (*vars)[i].id, (*vars)[i].type, (*vars)[i].val);
       }
     }

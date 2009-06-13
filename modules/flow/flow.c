@@ -29,37 +29,20 @@
 #include <string.h>
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(6 , sizeof(char *));
+  char **funcs = (char **)calloc(3, sizeof(char *));
 
-  funcs[0] = "if";
-/*  funcs[1] = "elif";
-  funcs[2] = "else";
-  funcs[3] = "while";*/
-  funcs[1] = "func";
-  funcs[2] = "return";
-  funcs[3] = "exit";
+  funcs[0] = "return";
+  funcs[1] = "exit";
+  /*funcs[2] = "if";
+  funcs[3] = "elif";
+  funcs[4] = "else";
+  funcs[5] = "while";*/
 
   return funcs;
 }
 
 p_val punt_if(p_val *args, p_var **vars) {
   p_val rval = val_make();
-  return rval;
-}
-
-p_val punt_func(p_val *args, p_var **vars) {
-  p_val rval = val_make();
-
-  if(val_llen(args) != 1) {
-    fprintf(stderr, "func: 1 argument required\n");
-    exit(1);
-  } else if(strcmp(args[0].type, "block")) {
-    fprintf(stderr, "func: must be of type \"block\"\n");
-    exit(1);
-  }
-  rval.type = "func";
-  rval.val = args[0].val;
-
   return rval;
 }
 

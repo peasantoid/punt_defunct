@@ -37,6 +37,7 @@ void var_ldup(p_var *src, p_var *dest) {
 
 int var_lexists(p_var *vars, char *id) {
   int i;
+  if(!strlen(id)) { return 0; }
   for(i = 0; i < var_llen(vars); i++) {
     if(!strcmp(vars[i].id, id)) { return 1; }
   }

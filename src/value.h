@@ -22,6 +22,8 @@
 
 p_val val_make();
 int val_true(p_val);
+double val_getnum(p_val);
+int val_cmp(p_val, p_val, char *);
 int val_llen(p_val *);
 void val_ldup(p_val *, p_val *);
 void val_lappend(p_val **, char *, void *);

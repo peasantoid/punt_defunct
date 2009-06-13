@@ -72,7 +72,7 @@ p_val punt_exit(p_val *args, p_var **vars) {
     fprintf(stderr, "exit: return code must be of type \"int\"\n");
     exit(1);
   }
-  exit(*(int *)args[0].val);
+  exit(*(long *)args[0].val);
 
   return rval;
 }

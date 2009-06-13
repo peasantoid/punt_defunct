@@ -37,9 +37,75 @@ p_val val_make() {
 /* is it true? */
 int val_true(p_val val) {
   if(!strcmp(val.type, "str") && strlen((char *)val.val) > 0) { return 1; }
-  else if(!strcmp(val.type, "int") && *(int *)val.val > 0) { return 1; }
+  else if(!strcmp(val.type, "int") && *(long *)val.val > 0) { return 1; }
   else if(!strcmp(val.type, "float") && *(double *)val.val > 0) { return 1; }
   else if(val.val) { return 1; }
+  return 0;
+}
+
+double val_getnum(p_val val) {
+  if(!strcmp(val.type, "int")) {
+    return (double)*(long *)val.val;
+  } else if(!strcmp(val.type, "float")) {
+    return *(double *)val.val;
+  } else {
+    return 0;
+  }
+}
+
+/* are they equal? */
+/* FIXME: this is highly inelegant */
+int val_cmp(p_val v1, p_val v2, char *op) {
+  /* both numbers */
+  if((!strcmp(v1.type, "int") || !strcmp(v1.type, "float")) &&
+      (!strcmp(v2.type, "int") || !strcmp(v2.type, "float"))) {
+    if(!strcmp(op, "eq")) {
+      return (int)(val_getnum(v1) == val_getnum(v2));
+    } else if(!strcmp(op, "neq")) {
+      return (int)(val_getnum(v1) != val_getnum(v2));
+    } else if(!strcmp(op, "lt")) {
+      return (int)(val_getnum(v1) < val_getnum(v2));
+    } else if(!strcmp(op, "gt")) {
+      return (int)(val_getnum(v1) > val_getnum(v2));
+    } else if(!strcmp(op, "le")) {
+      return (int)(val_getnum(v1) <= val_getnum(v2));
+    } else if(!strcmp(op, "ge")) {
+      return (int)(val_getnum(v1) >= val_getnum(v2));
+    }
+
+  /* both strings */
+  } else if(!strcmp(v1.type, "str") && !strcmp(v2.type, "str")) {
+    if(!strcmp(op, "eq")) {
+      return (int)(!strcmp((char *)v1.val, (char *)v2.val));
+    } else if(!strcmp(op, "neq")) {
+      return (int)(0 == strcmp((char *)v1.val, (char *)v2.val));
+    } else if(!strcmp(op, "lt")) {
+      return (int)(strlen((char *)v1.val) < strlen((char *)v2.val));
+    } else if(!strcmp(op, "gt")) {
+      return (int)(strlen((char *)v1.val) > strlen((char *)v2.val));
+    } else if(!strcmp(op, "le")) {
+      return (int)(strlen((char *)v1.val) <= strlen((char *)v2.val));
+    } else if(!strcmp(op, "ge")) {
+      return (int)(strlen((char *)v1.val) >= strlen((char *)v2.val));
+    }
+
+  /* fall back to comparing addresses -- likely to be different */
+  } else {
+    if(!strcmp(op, "eq")) {
+      return (int)(v1.val == v2.val);
+    } else if(!strcmp(op, "neq")) {
+      return (int)(v1.val != v2.val);
+    } else if(!strcmp(op, "lt")) {
+      return (int)(v1.val < v2.val);
+    } else if(!strcmp(op, "gt")) {
+      return (int)(v1.val > v2.val);
+    } else if(!strcmp(op, "le")) {
+      return (int)(v1.val <= v2.val);
+    } else if(!strcmp(op, "ge")) {
+      return (int)(v1.val >= v2.val);
+    }
+  }
+
   return 0;
 }
 

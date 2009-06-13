@@ -22,7 +22,7 @@
 #include "common.h"
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(16, sizeof(char *));
+  char **funcs = (char **)calloc(19, sizeof(char *));
 
   funcs[0] = "add";
   funcs[1] = "sub";
@@ -41,6 +41,10 @@ char **_punt_list_funcs() {
   funcs[12] = "cosh";
   funcs[13] = "sinh";
   funcs[14] = "tanh";
+
+  funcs[15] = "ceil";
+  funcs[17] = "floor";
+  funcs[16] = "abs";
 
   return funcs;
 }
@@ -163,6 +167,39 @@ p_val punt_tanh(p_val *args, p_var **vars) {
 
   checktypes(args, -1, "tanh");
   rval.val = ptr_dupfloat(tanh(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_ceil(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "ceil");
+  rval.val = ptr_dupfloat(ceil(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_floor(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "floor");
+  rval.val = ptr_dupfloat(floor(getval(args[0])));
+  intify(&rval);
+
+  return rval;
+}
+
+p_val punt_abs(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+    rval.type = "float";
+
+  checktypes(args, -1, "abs");
+  rval.val = ptr_dupfloat(fabs(getval(args[0])));
   intify(&rval);
 
   return rval;

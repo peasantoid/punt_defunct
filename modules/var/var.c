@@ -63,12 +63,7 @@ p_val punt_unbind(p_val *args, p_var **vars) {
     exit(1);
   }
   
-  int i;
-  for(i = 0; i < var_llen(*vars); i++) {
-    if(!strcmp((*vars)[i].id, (char *)args[0].val)) {
-      (*vars)[i].id = "";
-    }
-  }
+  var_lunset(vars, (char *)args[0].val);
 
   return rval;
 }

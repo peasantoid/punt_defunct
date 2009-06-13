@@ -36,10 +36,19 @@ p_val val_make() {
 
 /* is it true? */
 int val_true(p_val val) {
-  if(!strcmp(val.type, "str") && strlen((char *)val.val) > 0) { return 1; }
-  else if(!strcmp(val.type, "int") && *(long *)val.val > 0) { return 1; }
-  else if(!strcmp(val.type, "float") && *(double *)val.val > 0) { return 1; }
-  else if(val.val) { return 1; }
+  if(!strcmp(val.type, "str")) {
+    if(strlen((char *)val.val)) { return 1; }
+
+  } else if(!strcmp(val.type, "int")) {
+    if(*(long *)val.val) { return 1; }
+
+  } else if(!strcmp(val.type, "float")) {
+    if(*(double *)val.val) { return 1; }
+
+  } else if(val.val) {
+    return 1;
+  }
+
   return 0;
 }
 

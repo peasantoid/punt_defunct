@@ -22,4 +22,5 @@ void var_ldup(p_var *, p_var *);
 int var_lexists(p_var *, char *);
 p_var var_lget(p_var *, char *);
 void var_lset(p_var **, char *, char *, void *);
+void var_lunset(p_var **, char *);
 

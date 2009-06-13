@@ -1,4 +1,6 @@
 13.6.2009
-  * When executing a block, the engine sets the special variable .__func to its
-    contents. This lets anonymous functions recurse.
+  * When executing a block as a function, the engine sets the special variable
+    .__func to its contents. This lets anonymous functions recurse.
+  * Added .if to 'flow' module.
+  * Added .either to 'flow'.
 

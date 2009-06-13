@@ -29,37 +29,22 @@
 #include <string.h>
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(3, sizeof(char *));
+  char **funcs = (char **)calloc(5, sizeof(char *));
 
-  funcs[0] = "return";
+  funcs[0] = "give";
   funcs[1] = "exit";
-  /*funcs[2] = "if";
-  funcs[3] = "elif";
-  funcs[4] = "else";
-  funcs[5] = "while";*/
+  funcs[2] = "if";
+  funcs[3] = "either";
 
   return funcs;
 }
 
-/*
- * return a value
- *
- * The return value of an executed block is that of the last s-expression. This is the
- * last executed, so the block's return value becomes whatever is passed here.
- */
-p_val punt_return(p_val *args, p_var **vars) {
-  p_val rval = val_make();
-
+p_val punt_give(p_val *args, p_var **vars) {
   if(val_llen(args) != 1) {
-    fprintf(stderr, "return: 1 argument required\n");
+    fprintf(stderr, "give: 1 arg required\n");
     exit(1);
   }
-  rval.type = args[0].type;
-  rval.val = args[0].val;
-  /* set a variable to indicate we've returned */
-  var_lset(vars, "__return", "int", ptr_dupint(0));
-
-  return rval;
+  return args[0];
 }
 
 p_val punt_exit(p_val *args, p_var **vars) {
@@ -69,7 +54,7 @@ p_val punt_exit(p_val *args, p_var **vars) {
     fprintf(stderr, "exit: 1 argument required\n");
     exit(1);
   } else if(strcmp(args[0].type, "int")) {
-    fprintf(stderr, "exit: return code must be of type \"int\"\n");
+    fprintf(stderr, "exit: argument 1 must be of type \"int\"\n");
     exit(1);
   }
   exit(*(long *)args[0].val);
@@ -79,6 +64,37 @@ p_val punt_exit(p_val *args, p_var **vars) {
 
 p_val punt_if(p_val *args, p_var **vars) {
   p_val rval = val_make();
+  
+  if(val_llen(args) != 2) {
+    fprintf(stderr, "if: 2 arguments required\n");
+    exit(1);
+  } else if(strcmp(args[1].type, "block")) {
+    fprintf(stderr, "if: argument 2 must be of type \"block\"\n");
+    exit(1);
+  }
+
+  if(val_true(args[0])) {
+    rval = run_tokens((p_val *)args[1].val, vars);
+  }
+
+  return rval;
+}
+
+p_val punt_either(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+  
+  if(val_llen(args) != 3) {
+    fprintf(stderr, "either: 3 arguments required\n");
+    exit(1);
+  } else if(strcmp(args[1].type, "block") || strcmp(args[2].type, "block")) {
+    fprintf(stderr, "either: arguments 1 and 2 must be of type \"block\"\n");
+    exit(1);
+  }
+
+  rval = val_true(args[0]) ?
+    run_tokens((p_val *)args[1].val, vars) :
+    run_tokens((p_val *)args[2].val, vars);
+
   return rval;
 }
 

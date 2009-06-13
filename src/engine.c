@@ -70,7 +70,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
       for(i++; i < val_llen(tokens); i++) {
         if(!strcmp(tokens[i].type, "blockl")) { level++; }
         else if(!strcmp(tokens[i].type, "blockr")) { level--; }
-        if(level == 0) { break; }
+        if(!level) { break; }
 
         val_lappend(&block, tokens[i].type, tokens[i].val);
       }
@@ -146,9 +146,6 @@ p_val run_tokens(p_val *tokens, p_var **vars) {
     if(!strcmp(tokens[i].type, "sexpl")) {
       rval = run_sexp(tokens + i + 1, vars, &i);
     }
-
-    /* some return function was called */
-    if(var_lexists(*vars, "__return")) { break; }
   }
 
   return rval;

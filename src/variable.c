@@ -89,3 +89,11 @@ void var_lset(p_var **vars, char *id, char *type, void *val) {
   }
 }
 
+/* doesn't *actually* unset it, just makes it unusable */
+void var_lunset(p_var **vars, char *id) {
+  int i;
+  for(i = 0; i < var_llen(*vars); i++) {
+    if(!strcmp((*vars)[i].id, id)) { (*vars)[i].id = ""; }
+  }
+}
+

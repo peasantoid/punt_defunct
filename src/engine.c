@@ -116,6 +116,7 @@ p_val run_sexp(p_val *tokens, p_var **vars, int *offset) {
       var_lset(&funcvars, vafmt("_%d", i + 1), args[i].type, args[i].val);
     }
     var_lset(&funcvars, "__argc", "int", ptr_dupint(val_llen(args)));
+    var_lset(&funcvars, "__func", "block", func.val);
 
     /* pass down any functions defined in current scope */
     for(i = 0; i < var_llen(*vars); i++) {

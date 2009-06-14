@@ -77,27 +77,19 @@ p_val punt_stderr(p_val *args, p_var **vars) {
 p_val punt_fput(p_val *args, p_var **vars) {
   p_val rval = val_make();
 
-  if(!val_llen(args)) {
-    fprintf(stderr, "fput: 1 arg required\n");
+  if(val_llen(args) != 2) {
+    fprintf(stderr, "fput: 2 args required\n");
     exit(1);
   } else if(strcmp(args[0].type, "file")) {
     fprintf(stderr, "fput: arg 1 must be file\n");
     exit(1);
+  } else if(strcmp(args[1].type, "str")) {
+    fprintf(stderr, "fput: arg 2 must be str\n");
+    exit(1);
   }
 
   FILE *fp = (FILE *)args[0].val;
-  int i;
-  for(i = 1; i < val_llen(args); i++) {
-    if(!strcmp(args[i].type, "str")) {
-      fprintf(fp, "%s", (char *)args[i].val);
-    } else if(!strcmp(args[i].type, "int")) {
-      fprintf(fp, "%ld", *(long *)args[i].val);
-    } else if(!strcmp(args[i].type, "float")) {
-      fprintf(fp, "%lf", *(double *)args[i].val);
-    } else {
-      fprintf(fp, "<%s @ %p>", args[i].type, args[i].val);
-    }
-  }
+  fprintf(fp, "%s", (char *)args[1].val);  
   fflush(fp);
 
   return rval;

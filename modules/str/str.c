@@ -16,47 +16,43 @@
  */
 
 /*
- * bitwise operations
+ * string manipulation
  */
 
+#define _GNU_SOURCE
 #include "../../src/common.h"
 #include "../../src/value.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void checkargs(p_val *args, char *func, int minargs) {
-  if(val_llen(args) != 2) {
-    fprintf(stderr, "%s: %d args required\n", func, minargs);
-    exit(1);
-  }
-
-  int i;
-  for(i = 0; i < val_llen(args); i++) {
-    if(strcmp(args[i].type, "int")) {
-      fprintf(stderr, "%s: all args must be ints\n", func);
-      exit(1);
-    }
-  }
-}
-
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(7, sizeof(char *));
+  char **funcs = (char **)calloc(4, sizeof(char *));
 
-  funcs[0] = "bitnot";
-  /*funcs[1] = "bitor";
-  funcs[2] = "bitand";
-  funcs[3] = "bitxor";
-  funcs[4] = "bitl";
-  funcs[5] = "bitr";*/
+  funcs[0] = "sfmt";
+  /*funcs[1] = "sfind";
+  funcs[2] = "srepl";*/
 
   return funcs;
 }
 
-p_val punt_bitnot(p_val *args, p_var **vars) {
-  p_val rval = val_make();
-
-  checkargs(args, "bitnot", 1);
+p_val punt_sfmt(p_val *args, p_var **vars) {
+  p_val rval;
+    rval.type = "str";
+    rval.val = (void *)"";
+  
+  int i;
+  for(i = 0; i < val_llen(args); i++) {
+    if(!strcmp(args[i].type, "str")) {
+      asprintf((char **)&rval.val, "%s%s", (char *)rval.val, (char *)args[i].val);
+    } else if(!strcmp(args[i].type, "int")) {
+      asprintf((char **)&rval.val, "%s%ld", (char *)rval.val, *(long *)args[i].val);
+    } else if(!strcmp(args[i].type, "float")) {
+      asprintf((char **)&rval.val, "%s%lf", (char *)rval.val, *(double *)args[i].val);
+    } else {
+      asprintf((char **)&rval.val, "%s<%s @ %p>", (char *)rval.val, args[i].type, args[i].val);
+    }
+  }
 
   return rval;
 }

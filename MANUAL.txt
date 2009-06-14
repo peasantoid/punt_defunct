@@ -1,0 +1,66 @@
+[ Installation ]
+
+See README.txt.
+
+[ Syntax ]
+
+  [ S-expressions ]
+
+  punt source code consists entirely of s-expressions. It vaguely resembles
+  Lisp, albeit without most of the trappings. S-expressions may be nested.
+  <http://en.wikipedia.org/wiki/S-expression>
+
+  [ Blocks ]
+
+  Blocks are a way of encapsulating literal punt code for later execution. They
+  are callable (i.e. they can be used as functions).
+
+  Example:
+
+    [
+      (foo bar)
+      (baz)
+    ]
+
+    # example of calling a block
+    # this will print 'foobar'
+    (use 'io')
+    ([
+      (fput (stdout) 'Argument 1 is: ' _1 '\n')
+    ] 'foobar')
+
+  [ Symbols ]
+
+  A symbol represents a variable (or function; they're the same thing). You can
+  bind values and otherwise manipulate them with the <i>var</i> module.
+
+  Example:
+
+    (use 'io' 'var')
+
+    (bind .foo [ (fput (stdout) _1) ])
+    # foo is now a function that prints its 1st argument
+    (foo 'bar\n') # prints 'bar'
+
+    (bind .baz 3) # baz contains the number 3
+    (fput (stdout) baz '\n') # prints '3'
+
+  [ Literal symbols ]
+
+  You may have noticed that when using <i>bind</i> in the previous examples,
+  the symbol to be bound was prefixed with a period ('.'). By default, the punt
+  runtime engine expands any non-prefixed symbols it encounters to their
+  values.
+
+  Example:
+
+    (use 'var')
+
+    (bind foo 'bar')
+    # this doesn't work -- foo is undefined
+
+    (bind .baz .foo)
+    (bind baz 'bar')
+    # this does work, because the value of baz is a literal symbol
+    # pointing to a variable named foo
+

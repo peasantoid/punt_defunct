@@ -32,7 +32,7 @@ See README.txt.
   [ Symbols ]
 
   A symbol represents a variable (or function; they're the same thing). You can
-  bind values and otherwise manipulate them with the <i>var</i> module.
+  bind values and otherwise manipulate them with the 'var' module.
 
   Example:
 

@@ -179,7 +179,6 @@ p_val punt_fget(p_val *args, p_var **vars) {
   }
   free(str);
 
-
   return rval;
 }
 

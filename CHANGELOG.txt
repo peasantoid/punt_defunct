@@ -1,3 +1,6 @@
+14.6.2009
+  * Added .fclose and .fget.
+
 13.6.2009
   * When executing a block as a function, the engine sets the special variable
     .__func to its contents. This lets anonymous functions recurse.

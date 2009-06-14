@@ -27,24 +27,37 @@
 #include <string.h>
 
 char **_punt_list_funcs() {
-  char **funcs = (char **)calloc(8, sizeof(char *));
+  char **funcs = (char **)calloc(9, sizeof(char *));
 
-  funcs[0] = "not";
-  funcs[1] = "eq";
-  funcs[2] = "ne";
-  funcs[3] = "lt";
-  funcs[4] = "gt";
-  funcs[5] = "le";
-  funcs[6] = "ge";
+  funcs[0] = "yes";
+  funcs[1] = "no";
+  funcs[2] = "eq";
+  funcs[3] = "ne";
+  funcs[4] = "lt";
+  funcs[5] = "gt";
+  funcs[6] = "le";
+  funcs[7] = "ge";
 
   return funcs;
 }
 
-p_val punt_not(p_val *args, p_var **vars) {
+p_val punt_yes(p_val *args, p_var **vars) {
   p_val rval = val_make();
 
   if(val_llen(args) != 1) {
-    fprintf(stderr, "not: 1 arg required\n");
+    fprintf(stderr, "yes: 1 arg required\n");
+    exit(1);
+  }
+  *(long *)rval.val = val_true(args[0]);
+
+  return rval;
+}
+
+p_val punt_no(p_val *args, p_var **vars) {
+  p_val rval = val_make();
+
+  if(val_llen(args) != 1) {
+    fprintf(stderr, "no: 1 arg required\n");
     exit(1);
   }
   *(long *)rval.val = !val_true(args[0]);

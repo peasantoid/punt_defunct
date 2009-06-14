@@ -1,6 +1,6 @@
 DESTDIR=/
 PREFIX=/usr/local
 
-BIN_DIR=bin
-MODULE_DIR=lib/punt
+BIN_DIR=/bin
+MODULE_DIR=/lib/punt
 

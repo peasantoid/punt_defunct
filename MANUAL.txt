@@ -8,7 +8,7 @@ See README.txt.
 
   punt source code consists entirely of s-expressions. It vaguely resembles
   Lisp, albeit without most of the trappings. S-expressions may be nested.
-  <http://en.wikipedia.org/wiki/S-expression>
+  (http://en.wikipedia.org/wiki/S-expression)
 
   [ Blocks ]
 
@@ -47,7 +47,7 @@ See README.txt.
 
   [ Literal symbols ]
 
-  You may have noticed that when using <i>bind</i> in the previous examples,
+  You may have noticed that when using 'bind' in the previous examples,
   the symbol to be bound was prefixed with a period ('.'). By default, the punt
   runtime engine expands any non-prefixed symbols it encounters to their
   values.

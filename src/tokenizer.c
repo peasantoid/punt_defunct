@@ -139,9 +139,9 @@ p_val *tokenize_fp(FILE *fp) {
   int blocksize = 4096; /* hell, why not */
   
   code = (char *)calloc(1, sizeof(char));
-  while(1) {
-    read = (char *)calloc(blocksize + 1, sizeof(char)); /* +1 for nul */
-    fgets(read, blocksize, fp); if(feof(fp)) { break; }
+  while(!feof(fp)) {
+    read = (char *)calloc(blocksize + 1, sizeof(char)); /* +1 for NUL */
+    fgets(read, blocksize, fp);
     asprintf(&code, "%s%s", code, read);
     free(read);
   }

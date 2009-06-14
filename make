@@ -49,6 +49,16 @@ make_install() {
   cp build/modules/* "$DESTDIR/$PREFIX/$MODULE_DIR"
 }
 
+make_help() {
+  echo 'Usage: ./make [punt|modules|install|clean|help|all]'
+  echo '  punt:    build interpreter'
+  echo '  modules: build modules'
+  echo '  install: install interpreter and modules'
+  echo '  clean:   remove build (by)products'
+  echo '  help:    show this help'
+  echo '  all:     (default) build interpreter and modules'
+}
+
 source makeconf &&
 case "$1" in
   punt)
@@ -62,6 +72,9 @@ case "$1" in
     ;;
   clean)
     make_clean
+    ;;
+  help)
+    make_help
     ;;
   all|*)
     make_build_punt &&

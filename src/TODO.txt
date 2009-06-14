@@ -1,3 +1,6 @@
-* 'str' module: string manipulation, like .sfind, .sreplace, and so on
-* 'net' module: sockets -- not particularly essential yet
+(mark done items with +)
+
+- 'bit' module: bitwise operations: .bitor, .bitand, etc.
+- 'str' module: string manipulation, like .sfind, .sreplace, and so on
+- 'net' module: sockets -- not particularly essential yet
 

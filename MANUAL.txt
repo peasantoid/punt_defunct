@@ -64,3 +64,9 @@ See README.txt.
     # this does work, because the value of baz is a literal symbol
     # pointing to a variable named foo
 
+[ Loading modules ]
+
+  .use imports functions from a punt module:
+
+    (use 'io' 'math') # loads the 'io' and 'math' modules
+

@@ -55,7 +55,7 @@ void checktypes(p_val *args, int minlen, char *func) {
   int i;
 
   if(val_llen(args) < minlen) {
-    fprintf(stderr, "%s: at least 1 argument required\n", func);
+    fprintf(stderr, "%s: at least %d %s required\n", func, minlen, minlen == 1 ? "argument" : "arguments");
     exit(1);
   } else if(minlen < 0 && val_llen(args) != abs(minlen)) {
     fprintf(stderr, "%s: %d %s required\n", func, abs(minlen),
@@ -83,7 +83,7 @@ void intify(p_val *arg) {
 p_val do_arithmetic(p_val *args, char *func, char op) {
   p_val rval = val_make();
   rval.type = "float";
-  checktypes(args, 1, func);
+  checktypes(args, 2, func);
   rval.val = ptr_dupfloat(val_getnum(args[0]));
   int i;
 

@@ -43,7 +43,7 @@ int str_pos(char *target, char *search, int start) {
   if(strlen(search) == 0) { return -1; }
   pos = strstr(target + start, search);
   if(!pos) { return -1; }
-  
+
   return pos - target;
 }
 

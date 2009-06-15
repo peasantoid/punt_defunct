@@ -16,6 +16,6 @@
  */
 
 char *vafmt(char *, ...);
-int str_find(char *, char *, int);
+int str_pos(char *, char *, int);
 char *str_replace(char *, char *, char *, int);
 

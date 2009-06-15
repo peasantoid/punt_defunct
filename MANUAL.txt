@@ -24,9 +24,9 @@ See README.txt.
 
     # example of calling a block
     # this will print 'foobar'
-    (use 'io')
+    (use 'io' 'str')
     ([
-      (fput (stdout) 'Argument 1 is: ' _1 '\n')
+      (fput (stdout) (sfmt 'Argument 1 is: ' _1 '\n'))
     ] 'foobar')
 
   [ Symbols ]
@@ -36,14 +36,14 @@ See README.txt.
 
   Example:
 
-    (use 'io' 'var')
+    (use 'io' 'var' 'str')
 
     (bind .foo [ (fput (stdout) _1) ])
     # foo is now a function that prints its 1st argument
     (foo 'bar\n') # prints 'bar'
 
     (bind .baz 3) # baz contains the number 3
-    (fput (stdout) baz '\n') # prints '3'
+    (fput (stdout) (sfmt baz '\n')) # prints '3'
 
   [ Literal symbols ]
 

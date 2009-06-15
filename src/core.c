@@ -37,13 +37,22 @@ int main(int argc, char **argv) {
   p_val rval, *tokens = (p_val *)calloc(1, sizeof(p_val));
   p_var *vars = (p_var *)calloc(1, sizeof(p_var));
     var_lset(&vars, "use", "mfunc", &use_module);
+  struct stat finfo;
   
   for(i = 1; i < argc; i++) {
-    fp = fopen(argv[i], "r");
-    if(!fp) { /* FIXME: doesn't fail if you try to run a directory (!) */
-      perror(argv[i]);
+    /* 
+     * Code for detecting directories by vkumar:
+     * http://punt.archuser.com/support/forum/open-bugs/fixed-todo-in-corecmain/#p1
+     */
+    if(lstat(argv[i], &finfo) == -1 || S_ISDIR(finfo.st_mode)) {
+      if(S_ISDIR(finfo.st_mode)) {
+        fprintf(stderr, "%s: Is a directory\n", argv[i]);
+      } else {
+        perror(argv[i]);
+      }
       return 1;
     }
+    fp = fopen(argv[i], "r"); /* should this be 'rb'? */
     tokens = tokenize_fp(fp);
     fclose(fp);
     rval = run_tokens(tokens, &vars);

@@ -2,7 +2,7 @@
 
 - 'conv' module: type conversion
 + 'bit' module: bitwise operations: .bitor, .bitand, etc.
-- 'str' module: string manipulation, like .sfind, .sreplace, and so on
++ 'str' module: string manipulation, like .sfind, .sreplace, and so on
 - 'net' module: sockets -- not particularly essential yet
 - 'list' module: lists of values (p_val's)
 

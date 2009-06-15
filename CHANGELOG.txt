@@ -1,6 +1,7 @@
 14.6.2009
   * Added .fclose and .fget.
   * .fput no longer acts like printf().
+  * Added str.
 
 13.6.2009
   * When executing a block as a function, the engine sets the special variable
